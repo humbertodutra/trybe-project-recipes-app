@@ -10,10 +10,8 @@ function Login({ history }) {
 
   useEffect(() => {
     const minLength = 6;
-    const validRegex = (
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-    );
-    if (!email.match(validRegex) || password.length < minLength) {
+    const validRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
+    if (!email.match(validRegex) || password.length <= minLength) {
       setButtonDisable(true);
     } else {
       setButtonDisable(false);
