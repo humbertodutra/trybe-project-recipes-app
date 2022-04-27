@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
+import Header from '../../Components/Header';
+import MyContext from '../../context/MyContext';
 
-export default function Drinks() {
+export default function Drinks(props) {
+  const { searchOn } = useContext(MyContext);
+  useEffect(() => {
+    searchOn();
+  }, [searchOn]);
+
   return (
-    <div>Drinks</div>
+    <div>
+      <Header { ...props } title="Drinks" />
+    </div>
   );
 }

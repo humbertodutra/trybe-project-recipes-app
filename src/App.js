@@ -9,6 +9,11 @@ import Explore from './Pages/Explore/Explore';
 import Profile from './Pages/Profile/Profile';
 import FavoriteRecipes from './Pages/Favorite_Recipes/FavoriteRecipes';
 import DoneRecipes from './Pages/Done_Recipes/DoneRecipes';
+import ExploreDrinks from './Pages/Explore/ExploreDrinks';
+import ExploreDrinksIngredients from './Pages/Explore/ExploreDrinksIngredients';
+import ExploreFoods from './Pages/Explore/ExploreFoods';
+import ExploreFoodsIngredients from './Pages/Explore/ExploreFoodsIngredients';
+import ExploreFoodsNationalities from './Pages/Explore/ExploreFoodsNacionalities';
 
 function App() {
   return (
@@ -53,22 +58,22 @@ function App() {
         path="/explore"
         component={ Explore }
       />
-      {/* <Route
+      <Route
         exact
         path="/explore/foods"
         component={ ExploreFoods }
-      /> */}
-      {/* {/* <Route
+      />
+      <Route
         exact
         path="/explore/drinks"
         component={ ExploreDrinks }
-      /> */}
-      {/* <Route
+      />
+      <Route
         exact
         path="/explore/foods/ingredients"
         component={ ExploreFoodsIngredients }
-      /> */}
-      {/* <Route
+      />
+      <Route
         exact
         path="/explore/drinks/ingredients"
         component={ ExploreDrinksIngredients }
@@ -77,7 +82,7 @@ function App() {
         exact
         path="/explore/foods/nationalities"
         component={ ExploreFoodsNationalities }
-      /> */}
+      />
       <Route
         exact
         path="/profile"
@@ -90,7 +95,7 @@ function App() {
       />
       <Route
         exact
-        path="/done-recipes"
+        path="/favorite-recipes"
         component={ FavoriteRecipes }
       />
     </Switch>

@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
+import Header from '../../Components/Header';
+import MyContext from '../../context/MyContext';
 
-export default function FavoriteRecipes() {
+export default function FavoriteRecipes(props) {
+  const { searchOff } = useContext(MyContext);
+  useEffect(() => {
+    searchOff();
+  }, [searchOff]);
   return (
-    <div>FavoriteRecipes</div>
+    <div>
+      <Header { ...props } title="Favorite Recipes" />
+    </div>
   );
 }

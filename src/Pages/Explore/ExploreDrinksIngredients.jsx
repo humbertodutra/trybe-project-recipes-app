@@ -1,15 +1,15 @@
 import React, { useContext, useEffect } from 'react';
-import MyContext from '../../context/MyContext';
 import Header from '../../Components/Header';
+import MyContext from '../../context/MyContext';
 
-export default function Profile(props) {
+export default function ExploreDrinksIngredients(props) {
   const { searchOff } = useContext(MyContext);
   useEffect(() => {
     searchOff();
   }, [searchOff]);
   return (
     <div>
-      <Header { ...props } title="Profile" />
+      <Header { ...props } title="Explore Ingredients" />
     </div>
   );
 }
