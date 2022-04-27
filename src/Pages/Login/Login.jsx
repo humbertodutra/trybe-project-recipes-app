@@ -1,6 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import propTypes from 'prop-types';
+import { AiOutlineMail } from '@react-icons/all-files/ai/AiOutlineMail';
+import { RiLockPasswordFill } from '@react-icons/all-files/ri/RiLockPasswordFill';
 import MyContext from '../../context/MyContext';
+import styles from './login.module.css';
 
 function Login({ history }) {
   const {
@@ -28,38 +31,58 @@ function Login({ history }) {
   };
 
   return (
-    <>
-      <h1>Login</h1>
-      <form onSubmit={ onSubmit }>
-        <input
-          type="email"
-          data-testid="email-input"
-          name="email"
-          value={ email }
-          placeholder="Email"
-          onChange={ (e) => {
-            handleInputEmail(e);
-          } }
-        />
-        <input
-          type="password"
-          data-testid="password-input"
-          name="password"
-          value={ password }
-          placeholder="Password"
-          onChange={ (e) => {
-            handleInputPassword(e);
-          } }
-        />
-        <button
-          type="submit"
-          data-testid="login-submit-btn"
-          disabled={ buttonDisable }
-        >
-          Enter
-        </button>
-      </form>
-    </>
+    <section className={ styles.container }>
+      <div className={ styles.login_area }>
+        <div>
+          <h1>Login</h1>
+        </div>
+
+        <form className={ styles.form } onSubmit={ onSubmit }>
+          <div className={ styles.div_input }>
+            <input
+              type="email"
+              data-testid="email-input"
+              name="email"
+              className={ styles.inputs }
+              value={ email }
+              placeholder="Email"
+              onChange={ (e) => {
+                handleInputEmail(e);
+              } }
+            />
+            <AiOutlineMail />
+            <hr />
+          </div>
+
+          <div className={ styles.div_input }>
+            <input
+              type="password"
+              data-testid="password-input"
+              name="password"
+              className={ styles.inputs }
+              value={ password }
+              placeholder="Password"
+              onChange={ (e) => {
+                handleInputPassword(e);
+              } }
+            />
+            <RiLockPasswordFill />
+            <hr />
+          </div>
+
+          <div className={ styles.div_button }>
+            <button
+              type="submit"
+              data-testid="login-submit-btn"
+              className={ styles.button }
+              disabled={ buttonDisable }
+            >
+              Enter
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
 
   );
 }

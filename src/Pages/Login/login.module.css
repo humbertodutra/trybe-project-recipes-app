@@ -1,0 +1,62 @@
+.container {
+  align-items: center;
+  background-color: var(--light-grey);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  height: 18vh;
+  justify-content: space-around;
+}
+
+.div_input {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+}
+
+.inputs {
+  border: none;
+  border-radius: 0.5rem;
+  margin-top: 0.4rem;
+  padding: 0.4rem;
+  width: 90%;
+}
+
+.div_input svg {
+  left: -0.9rem;
+  position: absolute;
+  top: 1.2rem;
+}
+
+hr {
+  display: block;
+  margin: 0;
+  width: 87%;
+}
+
+.div_button {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  background-color: var(--accent-color);
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  margin-top: 0.4rem;
+  padding: 0.4rem;
+  width: 40%;
+}
