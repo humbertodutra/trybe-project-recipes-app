@@ -2,14 +2,14 @@ import React, { useContext, useEffect } from 'react';
 import Header from '../../Components/Header';
 import MyContext from '../../context/MyContext';
 
-export default function ExploreDrinks() {
+export default function ExploreDrinks(props) {
   const { searchOff } = useContext(MyContext);
   useEffect(() => {
     searchOff();
   }, [searchOff]);
   return (
     <div>
-      <Header title="Explore Drinks" />
+      <Header { ...props } title="Explore Drinks" />
     </div>
   );
 }

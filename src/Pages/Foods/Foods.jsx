@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import Header from '../../Components/Header';
 import MyContext from '../../context/MyContext';
 
-export default function Foods() {
+export default function Foods(props) {
   const { searchOn } = useContext(MyContext);
   useEffect(() => {
     searchOn();
@@ -10,7 +10,7 @@ export default function Foods() {
 
   return (
     <div>
-      <Header title="Foods" />
+      <Header { ...props } title="Foods" />
     </div>
   );
 }

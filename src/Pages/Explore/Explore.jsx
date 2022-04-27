@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import Header from '../../Components/Header';
 import MyContext from '../../context/MyContext';
 
-export default function Explore() {
+export default function Explore(props) {
   const { searchOff } = useContext(MyContext);
   useEffect(() => {
     searchOff();
@@ -10,7 +10,7 @@ export default function Explore() {
 
   return (
     <div>
-      <Header title="Explore" />
+      <Header { ...props } title="Explore" />
     </div>
   );
 }
