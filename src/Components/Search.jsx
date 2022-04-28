@@ -1,8 +1,12 @@
 import React, { useContext } from 'react';
+import propTypes from 'prop-types';
 import MyContext from '../context/MyContext';
 
-function Search() {
-  const { handleRadio, handleInputSearch, inputSearch } = useContext(MyContext);
+function Search({ title }) {
+  const {
+    handleRadio, handleInputSearch, inputSearch, selectApi, urlFoods,
+    urlDrinks } = useContext(MyContext);
+
   return (
     <form>
       <input
@@ -45,9 +49,27 @@ function Search() {
         />
         First Letter
       </label>
-      <button type="button" data-testid="exec-search-btn">Search</button>
+      <button
+        type="button"
+        data-testid="exec-search-btn"
+        onClick={ () => {
+          if (title === 'Foods') {
+            selectApi(urlFoods, 'meals');
+          }
+          if (title === 'Drinks') {
+            selectApi(urlDrinks, 'drinks');
+          }
+        } }
+      >
+        Search
+
+      </button>
     </form>
   );
 }
+
+Search.propTypes = {
+  title: propTypes.string,
+}.isRequired;
 
 export default Search;

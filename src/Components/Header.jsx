@@ -21,7 +21,6 @@ function Header({ title, history }) {
           data-testid="profile-top-btn"
           src={ profileIcon }
           onClick={ () => {
-            console.log(history);
             history.push('/profile');
           } }
         >
@@ -39,7 +38,7 @@ function Header({ title, history }) {
           </button>
         )}
       </header>
-      { inputVisible && <Search /> }
+      { inputVisible && <Search title={ title } /> }
     </main>
   );
 }
