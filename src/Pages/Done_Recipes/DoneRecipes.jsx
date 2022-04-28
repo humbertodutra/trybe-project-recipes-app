@@ -7,6 +7,7 @@ export default function DoneRecipes(props) {
   useEffect(() => {
     searchOff();
   }, [searchOff]);
+
   return (
     <div>
       <Header { ...props } title="Done Recipes" />
