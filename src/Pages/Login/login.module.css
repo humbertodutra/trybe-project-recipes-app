@@ -60,3 +60,7 @@ hr {
   padding: 0.4rem;
   width: 40%;
 }
+
+.button:disabled {
+  background-color: #db6345;
+}

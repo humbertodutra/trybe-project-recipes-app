@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import CardRecipes from '../../Components/CardRecipes';
 import Header from '../../Components/Header';
 import MyContext from '../../context/MyContext';
+import Footer from '../../Components/Footer/Footer';
 
 export default function Foods(props) {
   const { searchOn, recipes } = useContext(MyContext);
@@ -29,6 +30,7 @@ export default function Foods(props) {
           recipes.meals[0].idMeal
         }` }
       />}
+      <Footer />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import CardRecipes from '../../Components/CardRecipes';
 import Header from '../../Components/Header';
 import MyContext from '../../context/MyContext';
+import Footer from '../../Components/Footer/Footer';
 
 export default function Drinks(props) {
   const lengthDrinks = 12;
@@ -30,6 +31,7 @@ export default function Drinks(props) {
           recipes.drinks[0].idDrink
         }` }
       />}
+      <Footer />
     </div>
   );
 }
