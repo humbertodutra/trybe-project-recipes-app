@@ -14,31 +14,33 @@ function Header({ title, history }) {
   };
 
   return (
-    <header>
-      <button
-        type="button"
-        data-testid="profile-top-btn"
-        src={ profileIcon }
-        onClick={ () => {
-          console.log(history);
-          history.push('/profile');
-        } }
-      >
-        <img src={ profileIcon } alt="profileIcon" />
-      </button>
-      <h1 data-testid="page-title">{ title }</h1>
-      {search && (
+    <main>
+      <header>
         <button
           type="button"
-          data-testid="search-top-btn"
-          src={ searchIcon }
-          onClick={ handleInputVisible }
+          data-testid="profile-top-btn"
+          src={ profileIcon }
+          onClick={ () => {
+            console.log(history);
+            history.push('/profile');
+          } }
         >
-          <img src={ searchIcon } alt="searchIcon" />
+          <img src={ profileIcon } alt="profileIcon" />
         </button>
-      )}
+        <h1 data-testid="page-title">{ title }</h1>
+        {search && (
+          <button
+            type="button"
+            data-testid="search-top-btn"
+            src={ searchIcon }
+            onClick={ handleInputVisible }
+          >
+            <img src={ searchIcon } alt="searchIcon" />
+          </button>
+        )}
+      </header>
       { inputVisible && <Search /> }
-    </header>
+    </main>
   );
 }
 
