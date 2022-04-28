@@ -1,9 +1,12 @@
 import React, { useEffect, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
+import CardRecipes from '../../Components/CardRecipes';
 import Header from '../../Components/Header';
 import MyContext from '../../context/MyContext';
 
 export default function Foods(props) {
-  const { searchOn } = useContext(MyContext);
+  const { searchOn, recipes } = useContext(MyContext);
+  const lengthFood = 12;
   useEffect(() => {
     searchOn();
   }, [searchOn]);
@@ -11,6 +14,21 @@ export default function Foods(props) {
   return (
     <div>
       <Header { ...props } title="Foods" />
+      {recipes.meals && recipes.meals.map((elem, index) => (
+        index < lengthFood && (
+          <CardRecipes
+            index={ index }
+            strMeal={ elem.strMeal }
+            strMealThumb={ elem.strMealThumb }
+            key={ elem.idMeal }
+          />
+        )))}
+      {recipes.meals
+      && recipes.meals.length === 1 && <Redirect
+        to={ `/foods/${
+          recipes.meals[0].idMeal
+        }` }
+      />}
     </div>
   );
 }

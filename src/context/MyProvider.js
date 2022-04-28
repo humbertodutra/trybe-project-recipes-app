@@ -8,6 +8,9 @@ function MyProvider({ children }) {
   const [inputSearch, setinputSearch] = useState('');
   const [radio, setRadio] = useState('');
   const [search, setSearch] = useState(true);
+  const [urlFoods, setUrlFoods] = useState({ ingredient: 'https://www.themealdb.com/api/json/v1/1/filter.php?i=', name: 'https://www.themealdb.com/api/json/v1/1/search.php?s=', firstLetter: 'https://www.themealdb.com/api/json/v1/1/search.php?f=' });
+  const [urlDrinks, setUrlDrinks] = useState({ ingredient: 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=', name: 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=', firstLetter: 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=' });
+  const [recipes, setRecipes] = useState([]);
 
   const handleRadio = ({ target }) => {
     setRadio(target.value);
@@ -25,19 +28,36 @@ function MyProvider({ children }) {
     setPassword(target.value);
   };
 
-  // const getApiFood = async (url) => {
-  //   const request = await fetch(url);
-  //   const data = await request.json();
-  //   return data;
-  // };
+  const getApiFood = async (url, type) => {
+    const request = await fetch(url);
+    const data = await request.json();
+    setRecipes(data);
+    if (data[type] === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+    return data;
+  };
 
-  // const getApiFood = () => {
-  //   switch(radio) {
-  //     case "ingredient": {
-
-  //     }
-  //   }
-  // }
+  const selectApi = (objUrl, type) => {
+    let url = objUrl;
+    switch (radio) {
+    case 'ingredient': url = `${objUrl.ingredient}${inputSearch}`;
+      break;
+    case 'name': url = `${objUrl.name}${inputSearch}`;
+      break;
+    case 'first-letter':
+      if (inputSearch.length === 1) {
+        url = `${objUrl.firstLetter}${inputSearch}`;
+      } else {
+        global.alert('Your search must have only 1 (one) character');
+      }
+      break;
+    default: {
+      console.log('radio not found');
+    }
+    }
+    getApiFood(url, type);
+  };
 
   const searchOn = useCallback(() => {
     setSearch(true);
@@ -59,6 +79,12 @@ function MyProvider({ children }) {
     radio,
     handleInputSearch,
     handleRadio,
+    selectApi,
+    urlFoods,
+    setUrlFoods,
+    urlDrinks,
+    setUrlDrinks,
+    recipes,
   };
   return (
     <MyContext.Provider value={ context }>
