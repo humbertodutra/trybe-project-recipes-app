@@ -38,6 +38,12 @@ function MyProvider({ children }) {
     return data;
   };
 
+  const exploreRandom = async (url, type) => {
+    const result = await getApiFood(url, type);
+    console.log(result);
+    return result;
+  };
+
   const selectApi = (objUrl, type) => {
     let url = objUrl;
     switch (radio) {
@@ -85,6 +91,7 @@ function MyProvider({ children }) {
     urlDrinks,
     setUrlDrinks,
     recipes,
+    exploreRandom,
   };
   return (
     <MyContext.Provider value={ context }>
