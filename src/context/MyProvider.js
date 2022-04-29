@@ -31,10 +31,10 @@ function MyProvider({ children }) {
   const getApiFood = async (url, type) => {
     const request = await fetch(url);
     const data = await request.json();
-    setRecipes(data);
     if (data[type] === null) {
-      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      return global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
+    setRecipes(data);
     return data;
   };
 
@@ -49,7 +49,7 @@ function MyProvider({ children }) {
       if (inputSearch.length === 1) {
         url = `${objUrl.firstLetter}${inputSearch}`;
       } else {
-        global.alert('Your search must have only 1 (one) character');
+        return global.alert('Your search must have only 1 (one) character');
       }
       break;
     default: {
