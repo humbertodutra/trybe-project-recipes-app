@@ -14,7 +14,7 @@ function Login({ history }) {
   useEffect(() => {
     const minLength = 6;
     const validRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
-    if (!email.match(validRegex) || password.length <= minLength) {
+    if (!email.match(validRegex) || password.length < minLength) {
       setButtonDisable(true);
     } else {
       setButtonDisable(false);
