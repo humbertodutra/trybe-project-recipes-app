@@ -5,7 +5,11 @@ import MyContext from '../context/MyContext';
 function Search({ title }) {
   const {
     handleRadio, handleInputSearch, inputSearch, selectApi, urlFoods,
-    urlDrinks } = useContext(MyContext);
+    urlDrinks, showSearch, setShowSearch, getCategories,
+    setSearched,
+  } = useContext(MyContext);
+
+  const tagConvert = { Foods: 'meals', Drinks: 'drinks' };
 
   return (
     <form>
@@ -59,6 +63,9 @@ function Search({ title }) {
           if (title === 'Drinks') {
             selectApi(urlDrinks, 'drinks');
           }
+          getCategories(tagConvert[title]);
+          setShowSearch(!showSearch);
+          setSearched(true);
         } }
       >
         Search

@@ -9,7 +9,7 @@ export default function FavoriteRecipes(props) {
   }, [searchOff]);
   return (
     <div>
-      <Header { ...props } title="Favorite Recipes" />
+      <Header { ...props } title="Favorite Recipes" dontShowSearchIcon />
     </div>
   );
 }

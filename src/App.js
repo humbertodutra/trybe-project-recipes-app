@@ -14,6 +14,8 @@ import ExploreDrinksIngredients from './Pages/Explore/ExploreDrinksIngredients';
 import ExploreFoods from './Pages/Explore/ExploreFoods';
 import ExploreFoodsIngredients from './Pages/Explore/ExploreFoodsIngredients';
 import ExploreFoodsNationalities from './Pages/Explore/ExploreFoodsNacionalities';
+import FoodsRecipe from './Pages/FoodsRecipe/FoodsRecipe';
+import DrinksRecipe from './Pages/DrinksRecipe/DrinksRecipe';
 
 function App() {
   return (
@@ -35,13 +37,13 @@ function App() {
       />
       <Route
         exact
-        path="/foods/:id-da-receita"
-        component={ Foods }
+        path="/foods/:idRecipe"
+        render={ (props) => <FoodsRecipe { ...props } /> }
       />
       <Route
         exact
-        path="/drinks/:id-da-receita"
-        component={ Drinks }
+        path="/drinks/:idRecipe"
+        render={ (props) => <DrinksRecipe { ...props } /> }
       />
       {/* <Route
         exact

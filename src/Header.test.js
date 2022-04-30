@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { cleanup, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import App from './App';
@@ -43,6 +43,18 @@ describe('Tela do Header', () => {
     expect(inputName).toBeInTheDocument();
     expect(inputFirstLetter).toBeInTheDocument();
     expect(buttonSearch).toBeInTheDocument();
+  });
+
+  it('Verifica se ao clicar no botão com a lupa o form desaparece', async () => {
+    const { history } = renderWithRouter(<App />);
+    history.push('/Foods');
+    const search = screen.getByTestId(searchTestId);
+    userEvent.click(search);
+    const inputText = screen.getByTestId(inputSearch);
+    expect(inputText).toBeInTheDocument();
+    userEvent.click(search);
+    expect(inputText).not.toBeInTheDocument();
+    cleanup();
   });
 
   it('Verifica se ao clicar no botao de pesquisa e feita uma requisicao', async () => {
@@ -122,16 +134,6 @@ describe('Tela do Header', () => {
     });
     const brownChicken = await screen.findByTestId('0-card-name');
     expect(brownChicken).toBeInTheDocument();
-  });
-
-  it('Verifica se ao clicar no botão com a lupa o form desaparece', () => {
-    const { history } = renderWithRouter(<App />);
-    history.push('/Foods');
-    const search = screen.getByTestId(searchTestId);
-    userEvent.click(search);
-    const inputText = screen.getByTestId(inputSearch);
-    expect(inputText).toBeInTheDocument();
-    userEvent.click(search);
-    expect(inputText).not.toBeInTheDocument();
+    cleanup();
   });
 });

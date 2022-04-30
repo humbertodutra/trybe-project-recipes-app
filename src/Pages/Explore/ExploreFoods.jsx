@@ -10,7 +10,7 @@ export default function ExploreFoods(props) {
   }, [searchOff]);
   return (
     <div>
-      <Header { ...props } title="Explore Foods" />
+      <Header { ...props } title="Explore Foods" dontShowSearchIcon />
       <Footer />
     </div>
   );

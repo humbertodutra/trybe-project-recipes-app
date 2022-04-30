@@ -10,7 +10,10 @@ function MyProvider({ children }) {
   const [search, setSearch] = useState(true);
   const [urlFoods, setUrlFoods] = useState({ ingredient: 'https://www.themealdb.com/api/json/v1/1/filter.php?i=', name: 'https://www.themealdb.com/api/json/v1/1/search.php?s=', firstLetter: 'https://www.themealdb.com/api/json/v1/1/search.php?f=' });
   const [urlDrinks, setUrlDrinks] = useState({ ingredient: 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=', name: 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=', firstLetter: 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=' });
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState({ meals: [], drinks: [] });
+  const [showSearch, setShowSearch] = useState(false);
+  const [searched, setSearched] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   const handleRadio = ({ target }) => {
     setRadio(target.value);
@@ -28,12 +31,49 @@ function MyProvider({ children }) {
     setPassword(target.value);
   };
 
+  const getAllRecipes = async (type) => {
+    const url = (type === 'meals' ? (
+      'https://www.themealdb.com/api/json/v1/1/search.php?s='
+    ) : (
+      'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='
+    ));
+    const request = await fetch(url);
+    const data = await request.json();
+    setRecipes(data);
+    return data;
+  };
+
   const getApiFood = async (url, type) => {
     const request = await fetch(url);
     const data = await request.json();
     if (data[type] === null) {
       return global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
+    setRecipes(data);
+    return data;
+  };
+
+  const getCategories = async (type) => {
+    const url = (type === 'meals' ? (
+      'https://www.themealdb.com/api/json/v1/1/list.php?c=list'
+    ) : (
+      'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list'
+    ));
+    const request = await fetch(url);
+    const data = await request.json();
+    setCategories(data);
+    return data;
+  };
+
+  const getRecipesByCategory = async (categoryName, type) => {
+    const rootUrl = (type === 'meals' ? (
+      'https://www.themealdb.com/api/json/v1/1/filter.php?c='
+    ) : (
+      'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c='
+    ));
+    const endpoint = `${rootUrl}${categoryName}`;
+    const request = await fetch(endpoint);
+    const data = await request.json();
     setRecipes(data);
     return data;
   };
@@ -56,7 +96,7 @@ function MyProvider({ children }) {
       console.log('radio not found');
     }
     }
-    getApiFood(url, type);
+    return getApiFood(url, type);
   };
 
   const searchOn = useCallback(() => {
@@ -85,6 +125,16 @@ function MyProvider({ children }) {
     urlDrinks,
     setUrlDrinks,
     recipes,
+    showSearch,
+    setShowSearch,
+    categories,
+    setCategories,
+    getCategories,
+    setRecipes,
+    getRecipesByCategory,
+    getAllRecipes,
+    searched,
+    setSearched,
   };
   return (
     <MyContext.Provider value={ context }>
