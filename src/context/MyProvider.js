@@ -76,6 +76,12 @@ function MyProvider({ children }) {
     const data = await request.json();
     setRecipes(data);
     return data;
+  }
+
+  const exploreRandom = async (url, type) => {
+    const result = await getApiFood(url, type);
+    console.log(result);
+    return result;
   };
 
   const selectApi = (objUrl, type) => {
@@ -112,9 +118,6 @@ function MyProvider({ children }) {
     password,
     handleInputEmail,
     handleInputPassword,
-    searchOn,
-    search,
-    searchOff,
     inputSearch,
     radio,
     handleInputSearch,
@@ -135,6 +138,7 @@ function MyProvider({ children }) {
     getAllRecipes,
     searched,
     setSearched,
+    exploreRandom,
   };
   return (
     <MyContext.Provider value={ context }>
