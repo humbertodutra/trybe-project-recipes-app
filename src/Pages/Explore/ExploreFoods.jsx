@@ -1,14 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import propTypes from 'prop-types';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer/Footer';
-import MyContext from '../../context/MyContext';
 
 export default function ExploreFoods(props) {
-  const { searchOff, exploreRandom } = useContext(MyContext);
-  useEffect(() => {
-    searchOff();
-  }, [searchOff]);
   return (
     <div>
       <Header { ...props } title="Explore Foods" dontShowSearchIcon />

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import propTypes from 'prop-types';
 import MyContext from './MyContext';
 
@@ -7,7 +7,6 @@ function MyProvider({ children }) {
   const [password, setPassword] = useState('');
   const [inputSearch, setinputSearch] = useState('');
   const [radio, setRadio] = useState('');
-  const [search, setSearch] = useState(true);
   const [urlFoods, setUrlFoods] = useState({ ingredient: 'https://www.themealdb.com/api/json/v1/1/filter.php?i=', name: 'https://www.themealdb.com/api/json/v1/1/search.php?s=', firstLetter: 'https://www.themealdb.com/api/json/v1/1/search.php?f=' });
   const [urlDrinks, setUrlDrinks] = useState({ ingredient: 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=', name: 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=', firstLetter: 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=' });
   const [recipes, setRecipes] = useState({ meals: [], drinks: [] });
@@ -76,7 +75,7 @@ function MyProvider({ children }) {
     const data = await request.json();
     setRecipes(data);
     return data;
-  }
+  };
 
   const exploreRandom = async (url, type) => {
     const result = await getApiFood(url, type);
@@ -104,14 +103,6 @@ function MyProvider({ children }) {
     }
     return getApiFood(url, type);
   };
-
-  const searchOn = useCallback(() => {
-    setSearch(true);
-  }, []);
-
-  const searchOff = useCallback(() => {
-    setSearch(false);
-  }, []);
 
   const context = {
     email,
