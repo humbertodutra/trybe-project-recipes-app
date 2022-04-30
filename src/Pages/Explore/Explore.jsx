@@ -12,7 +12,7 @@ export default function Explore(props) {
 
   return (
     <div>
-      <Header { ...props } title="Explore" />
+      <Header { ...props } title="Explore" dontShowSearchIcon />
       <form>
         <button
           type="button"

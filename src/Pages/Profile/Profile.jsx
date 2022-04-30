@@ -10,7 +10,7 @@ export default function Profile(props) {
   }, [searchOff]);
   return (
     <div>
-      <Header { ...props } title="Profile" />
+      <Header { ...props } title="Profile" dontShowSearchIcon />
       <Footer />
     </div>
   );

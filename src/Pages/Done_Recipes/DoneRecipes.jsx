@@ -11,7 +11,7 @@ export default function DoneRecipes(props) {
 
   return (
     <div>
-      <Header { ...props } title="Done Recipes" />
+      <Header { ...props } title="Done Recipes" dontShowSearchIcon />
       <form>
         <button
           type="button"

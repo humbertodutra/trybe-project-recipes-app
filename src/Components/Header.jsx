@@ -1,17 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import propTypes from 'prop-types';
 import MyContext from '../context/MyContext';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import Search from './Search';
 
-function Header({ title, history }) {
-  const { search } = useContext(MyContext);
-  const [inputVisible, setInputVisible] = useState(false);
-
-  const handleInputVisible = () => {
-    setInputVisible(!inputVisible);
-  };
+function Header({ title, history, dontShowSearchIcon }) {
+  const { showSearch, setShowSearch, setSearched } = useContext(MyContext);
 
   return (
     <main>
@@ -26,19 +21,24 @@ function Header({ title, history }) {
         >
           <img src={ profileIcon } alt="profileIcon" />
         </button>
-        <h1 data-testid="page-title">{ title }</h1>
-        {search && (
-          <button
-            type="button"
-            data-testid="search-top-btn"
-            src={ searchIcon }
-            onClick={ handleInputVisible }
-          >
-            <img src={ searchIcon } alt="searchIcon" />
-          </button>
-        )}
+        <h1 data-testid="page-title">{title}</h1>
+        {
+          !dontShowSearchIcon && (
+            <button
+              type="button"
+              data-testid="search-top-btn"
+              src={ searchIcon }
+              onClick={ () => {
+                setSearched(false);
+                setShowSearch(!showSearch);
+              } }
+            >
+              <img src={ searchIcon } alt="searchIcon" />
+            </button>
+          )
+        }
       </header>
-      { inputVisible && <Search title={ title } /> }
+      { showSearch && <Search title={ title } /> }
     </main>
   );
 }
