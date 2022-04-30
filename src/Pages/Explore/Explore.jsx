@@ -1,15 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import propTypes from 'prop-types';
 import Footer from '../../Components/Footer/Footer';
 import Header from '../../Components/Header';
-import MyContext from '../../context/MyContext';
 
 export default function Explore(props) {
-  const { searchOff } = useContext(MyContext);
-  useEffect(() => {
-    searchOff();
-  }, [searchOff]);
-
   return (
     <div>
       <Header { ...props } title="Explore" dontShowSearchIcon />
