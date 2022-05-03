@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import propTypes from 'prop-types';
 import MyContext from './MyContext';
 
@@ -13,6 +13,9 @@ function MyProvider({ children }) {
   const [showSearch, setShowSearch] = useState(false);
   const [searched, setSearched] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [details, setDetails] = useState({});
+  const [arrayIngredients, setArrayIngredients] = useState({});
+  const [recommend, setRecommend] = useState({});
 
   const handleRadio = ({ target }) => {
     setRadio(target.value);
@@ -51,6 +54,21 @@ function MyProvider({ children }) {
     setRecipes(data);
     return data;
   };
+
+  const getApiDetails = useCallback(async (url, type) => {
+    const request = await fetch(url);
+    const data = await request.json();
+    setDetails(data);
+    const array = Object.entries(data[type][0]);
+    const filterIngredients = array.filter(
+      (elem) => elem[0].includes('strIngredient')
+      && elem[1] !== '',
+    );
+    console.log(filterIngredients);
+    const filterMens = array
+      .filter((elem) => elem[0].includes('strMeasure') && elem[1] !== '');
+    setArrayIngredients({ filterIngredients, filterMens });
+  }, []);
 
   const getCategories = async (type) => {
     const url = (type === 'meals' ? (
@@ -104,6 +122,16 @@ function MyProvider({ children }) {
     return getApiFood(url, type);
   };
 
+  const getApiRecomend = useCallback(async (url, type) => {
+    const result = await fetch(url);
+    const data = await result.json();
+    const sixLength = 6;
+    const six = data[type].filter((_elem, i) => i < sixLength);
+    console.log(six);
+    setRecommend(six);
+    return data;
+  }, []);
+
   const context = {
     email,
     password,
@@ -130,6 +158,11 @@ function MyProvider({ children }) {
     searched,
     setSearched,
     exploreRandom,
+    getApiDetails,
+    details,
+    arrayIngredients,
+    getApiRecomend,
+    recommend,
   };
   return (
     <MyContext.Provider value={ context }>
