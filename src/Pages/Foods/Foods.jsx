@@ -8,7 +8,7 @@ import CardCategories from '../../Components/CardCategories/CardCategories';
 
 export default function Foods(props) {
   const { recipes, categories, getAllRecipes, showSearch,
-    getCategories, searched, originalRecipes } = useContext(MyContext);
+    getCategories, searched } = useContext(MyContext);
   const lengthFood = 12;
   const lengthCategories = 5;
 
@@ -18,10 +18,6 @@ export default function Foods(props) {
   }, []);
 
   const [selectedCategory, setSelectedCategory] = useState('All');
-
-  const recipesToRender = (selectedCategory === 'All' ? originalRecipes : (
-    recipes
-  ));
 
   return (
     <div>
@@ -44,7 +40,7 @@ export default function Foods(props) {
         )
       ))}
 
-      {recipesToRender.meals && recipesToRender.meals.map((elem, index) => (
+      {recipes.meals && recipes.meals.map((elem, index) => (
         index < lengthFood && (
           <CardRecipes
             prevPath="foods"
@@ -55,10 +51,10 @@ export default function Foods(props) {
             id={ elem.idMeal }
           />
         )))}
-      {recipesToRender.meals
-      && (recipesToRender.meals.length === 1 && searched) && <Redirect
+      {recipes.meals
+      && (recipes.meals.length === 1 && searched) && <Redirect
         to={ `/foods/${
-          recipesToRender.meals[0].idMeal
+          recipes.meals[0].idMeal
         }` }
       />}
       <Footer />

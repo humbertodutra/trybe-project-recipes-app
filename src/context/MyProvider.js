@@ -39,8 +39,8 @@ function MyProvider({ children }) {
     ));
     const request = await fetch(url);
     const data = await request.json();
-    setRecipes(data);
     setOriginalRecipes(data);
+    setRecipes(data);
     return data;
   };
 

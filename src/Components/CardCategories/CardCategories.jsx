@@ -8,7 +8,8 @@ function CardCategories(props) {
     getRecipesByCategory,
     // getAllRecipes,
     // setRecipes,
-    // originalRecipes,
+    originalRecipes,
+    setRecipes,
   } = useContext(MyContext);
 
   const tagConvert = { Foods: 'meals', Drinks: 'drinks' };
@@ -18,13 +19,12 @@ function CardCategories(props) {
       data-testid={ `${categoryName}-category-filter` }
       type="button"
       onClick={ () => {
-        if (categoryName !== 'All') {
-          getRecipesByCategory(categoryName, tagConvert[title]);
-        }
         if (categoryName === selectedCategory) {
           setSelectedCategory('All');
+          setRecipes(originalRecipes);
         } else {
           setSelectedCategory(categoryName);
+          getRecipesByCategory(categoryName, tagConvert[title]);
         }
       } }
     >
