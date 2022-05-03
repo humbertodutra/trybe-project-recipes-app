@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import propTypes from 'prop-types';
 import MyContext from './MyContext';
+import { fetchIngredients, fetchPhotoIngredient } from '../service/getIngredients';
 
 function MyProvider({ children }) {
   const [email, setEmail] = useState('');
@@ -130,6 +131,8 @@ function MyProvider({ children }) {
     searched,
     setSearched,
     exploreRandom,
+    fetchIngredients,
+    fetchPhotoIngredient,
   };
   return (
     <MyContext.Provider value={ context }>

@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import App from './App';
 import ExploreFoods from './Pages/Explore/ExploreFoods';
-// import { meals } from './mock.json';
+import meals from './mock.json';
 // import * as test from './service/test';
 
 const EXPLORE_FOODS = '/explore/foods';
@@ -46,13 +46,14 @@ describe('Testes da tela Explore Foods', () => {
     expect(pathname).toBe('/explore/foods/nationalities');
   });
 
-  // it(`Ao clicar em "Surprise me!", a rota deve mudar para a tela de detalhes de uma
-  // receita, que deve ser escolhida de forma aleatória através da API`, () => {
-  //   const { history } = renderWithRouter(<App />);
-  //   history.push(EXPLORE_FOODS);
-  //   const btnSurprise = screen.getByTestId('explore-surprise');
-  //   userEvent.click(btnSurprise);
-  //   const surprise = jest.spyOn(test, 'exploreRandom').mockResolvedValue(meals);
-  //   expect(surprise).toHaveBeenCalled();
-  // });
+  it(`Ao clicar em "Surprise me!", a rota deve mudar para a tela de detalhes de uma
+  receita, que deve ser escolhida de forma aleatória através da API`, () => {
+    const surprise = jest.spyOn(global, 'fetch')
+      .mockResolvedValue({ json: jest.fn().mockResolvedValue(meals) });
+    const { history } = renderWithRouter(<App />);
+    history.push(EXPLORE_FOODS);
+    const btnSurprise = screen.getByTestId('explore-surprise');
+    userEvent.click(btnSurprise);
+    expect(surprise).toHaveBeenCalled();
+  });
 });
