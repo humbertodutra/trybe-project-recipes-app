@@ -39,6 +39,7 @@ export default function Foods(props) {
           />
         )
       ))}
+
       {recipes.meals && recipes.meals.map((elem, index) => (
         index < lengthFood && (
           <CardRecipes
