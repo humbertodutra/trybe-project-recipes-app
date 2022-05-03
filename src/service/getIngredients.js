@@ -7,5 +7,6 @@ export const fetchIngredients = async () => {
 export const fetchPhotoIngredient = async (ingredientName) => {
   const url = `https://www.themealdb.com/images/ingredients/${ingredientName}-Small.png`;
   const result = await fetch(url).then((response) => response.json());
-  return result;
+  console.log(result.toString());
+  // return result;
 };
