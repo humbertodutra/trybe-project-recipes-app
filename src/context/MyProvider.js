@@ -10,6 +10,7 @@ function MyProvider({ children }) {
   const [urlFoods, setUrlFoods] = useState({ ingredient: 'https://www.themealdb.com/api/json/v1/1/filter.php?i=', name: 'https://www.themealdb.com/api/json/v1/1/search.php?s=', firstLetter: 'https://www.themealdb.com/api/json/v1/1/search.php?f=' });
   const [urlDrinks, setUrlDrinks] = useState({ ingredient: 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=', name: 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=', firstLetter: 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=' });
   const [recipes, setRecipes] = useState({ meals: [], drinks: [] });
+  const [originalRecipes, setOriginalRecipes] = useState({ meals: [], drinks: [] });
   const [showSearch, setShowSearch] = useState(false);
   const [searched, setSearched] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -41,6 +42,7 @@ function MyProvider({ children }) {
     ));
     const request = await fetch(url);
     const data = await request.json();
+    setOriginalRecipes(data);
     setRecipes(data);
     return data;
   };
@@ -163,6 +165,8 @@ function MyProvider({ children }) {
     arrayIngredients,
     getApiRecomend,
     recommend,
+    originalRecipes,
+    setOriginalRecipes,
   };
   return (
     <MyContext.Provider value={ context }>

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import propTypes from 'prop-types';
 import Footer from '../../Components/Footer/Footer';
 import Header from '../../Components/Header';
+import MyContext from '../../context/MyContext';
 
 export default function ExploreDrinks(props) {
+  const { exploreRandom } = useContext(MyContext);
   return (
     <div>
       <Header { ...props } title="Explore Drinks" dontShowSearchIcon />
