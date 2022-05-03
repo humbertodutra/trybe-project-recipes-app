@@ -4,8 +4,7 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import App from './App';
 import ExploreFoods from './Pages/Explore/ExploreFoods';
-import meals from './mock.json';
-// import * as test from './service/test';
+import meals from './mocks/meals.json';
 
 const EXPLORE_FOODS = '/explore/foods';
 
