@@ -19,7 +19,7 @@ function CardCategories(props) {
       data-testid={ `${categoryName}-category-filter` }
       type="button"
       onClick={ () => {
-        if (categoryName === selectedCategory) {
+        if (categoryName === selectedCategory || categoryName === 'All') {
           setSelectedCategory('All');
           setRecipes(originalRecipes);
         } else {
