@@ -16,6 +16,7 @@ import ExploreFoodsIngredients from './Pages/Explore/ExploreFoodsIngredients';
 import ExploreFoodsNationalities from './Pages/Explore/ExploreFoodsNacionalities';
 import FoodsRecipe from './Pages/FoodsRecipe/FoodsRecipe';
 import DrinksRecipe from './Pages/DrinksRecipe/DrinksRecipe';
+// import FoodProgress from './Pages/FoodProgress/FoodProgress';
 
 function App() {
   return (

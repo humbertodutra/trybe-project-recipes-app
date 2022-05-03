@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.container_carrousel {
+  display: flex;
+  overflow: scroll;
+}
+
+.container_carrousel li {
+  height: 20rem;
+  width: 20rem;
+}
+
+.button_start {
+  bottom: 0;
+  position: fixed;
+}
