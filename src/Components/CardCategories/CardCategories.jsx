@@ -6,8 +6,6 @@ function CardCategories(props) {
   const { categoryName, title, selectedCategory, setSelectedCategory } = props;
   const {
     getRecipesByCategory,
-    // getAllRecipes,
-    // setRecipes,
     originalRecipes,
     setRecipes,
   } = useContext(MyContext);
