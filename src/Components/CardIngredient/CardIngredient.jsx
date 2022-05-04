@@ -1,22 +1,16 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import propTypes from 'prop-types';
-import MyContext from '../../context/MyContext';
 
-export default function CardIngredient({ strIngredient, idIngredient: index }) {
-  const { fetchPhotoIngredient } = useContext(MyContext);
-  useEffect(() => {
-    fetchPhotoIngredient(strIngredient);
-
-  }, []);
-
+export default function CardIngredient({ strIngredient, idIngredient }) {
+  console.log(idIngredient);
   return (
-    <div data-testid={ `${index}-ingredient-card` }>
+    <div data-testid={ `${idIngredient}-ingredient-card` }>
       <img
-        src={  }
+        src={ `https://www.themealdb.com/images/ingredients/${strIngredient}-Small.png` }
         alt=""
-        data-testid={ `${index}-card-img` }
+        data-testid={ `${idIngredient}-card-img` }
       />
-      <h2 data-testid={ `${index}-card-name` }>{strIngredient}</h2>
+      <h2 data-testid={ `${idIngredient}-card-name` }>{strIngredient}</h2>
     </div>
   );
 }
