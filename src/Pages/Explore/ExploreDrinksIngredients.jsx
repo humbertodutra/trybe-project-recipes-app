@@ -29,6 +29,7 @@ export default function ExploreDrinksIngredients(props) {
       {arrIngredients.length !== 0 && arrIngredients.map(
         ({ strIngredient1 }, index) => (
           <CardDrinkIngredient
+            { ...props }
             key={ index }
             strIngredient={ strIngredient1 }
             idIngredient={ index }

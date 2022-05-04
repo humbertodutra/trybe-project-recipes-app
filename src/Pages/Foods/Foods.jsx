@@ -8,13 +8,14 @@ import CardCategories from '../../Components/CardCategories/CardCategories';
 
 export default function Foods(props) {
   const { recipes, categories, getAllRecipes, showSearch,
-    getCategories, searched } = useContext(MyContext);
+    getCategories, searched, recipesByIng } = useContext(MyContext);
   const lengthFood = 12;
   const lengthCategories = 5;
 
   useEffect(() => {
     getAllRecipes('meals');
     getCategories('meals');
+    console.log(recipesByIng);
   }, []);
 
   const [selectedCategory, setSelectedCategory] = useState('All');
