@@ -17,6 +17,8 @@ function MyProvider({ children }) {
   const [details, setDetails] = useState({});
   const [arrayIngredients, setArrayIngredients] = useState({});
   const [recommend, setRecommend] = useState({});
+  const [startedRecepies, setStartedRecepies] = useState({ meals: {}, cocktails: {} });
+  const [favorite, setFavorite] = useState([]);
 
   const handleRadio = ({ target }) => {
     setRadio(target.value);
@@ -66,7 +68,6 @@ function MyProvider({ children }) {
       (elem) => elem[0].includes('strIngredient')
       && elem[1] !== '',
     );
-    console.log(filterIngredients);
     const filterMens = array
       .filter((elem) => elem[0].includes('strMeasure') && elem[1] !== '');
     setArrayIngredients({ filterIngredients, filterMens });
@@ -129,7 +130,6 @@ function MyProvider({ children }) {
     const data = await result.json();
     const sixLength = 6;
     const six = data[type].filter((_elem, i) => i < sixLength);
-    console.log(six);
     setRecommend(six);
     return data;
   }, []);
@@ -167,6 +167,10 @@ function MyProvider({ children }) {
     recommend,
     originalRecipes,
     setOriginalRecipes,
+    startedRecepies,
+    setStartedRecepies,
+    favorite,
+    setFavorite,
   };
   return (
     <MyContext.Provider value={ context }>

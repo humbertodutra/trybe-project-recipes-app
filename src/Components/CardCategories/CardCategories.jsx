@@ -6,8 +6,6 @@ function CardCategories(props) {
   const { categoryName, title, selectedCategory, setSelectedCategory } = props;
   const {
     getRecipesByCategory,
-    // getAllRecipes,
-    // setRecipes,
     originalRecipes,
     setRecipes,
   } = useContext(MyContext);
@@ -19,7 +17,7 @@ function CardCategories(props) {
       data-testid={ `${categoryName}-category-filter` }
       type="button"
       onClick={ () => {
-        if (categoryName === selectedCategory) {
+        if (categoryName === selectedCategory || categoryName === 'All') {
           setSelectedCategory('All');
           setRecipes(originalRecipes);
         } else {
