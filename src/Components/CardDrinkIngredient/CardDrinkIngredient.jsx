@@ -1,12 +1,11 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
-export default function CardIngredient({ strIngredient, idIngredient }) {
-  // console.log(idIngredient);
+export default function CardDrinkIngredient({ strIngredient, idIngredient }) {
   return (
     <div data-testid={ `${idIngredient}-ingredient-card` }>
       <img
-        src={ `https://www.themealdb.com/images/ingredients/${strIngredient}-Small.png` }
+        src={ `https://www.thecocktaildb.com/images/ingredients/${strIngredient}-Small.png` }
         alt=""
         data-testid={ `${idIngredient}-card-img` }
       />
@@ -15,7 +14,7 @@ export default function CardIngredient({ strIngredient, idIngredient }) {
   );
 }
 
-CardIngredient.propTypes = {
+CardDrinkIngredient.propTypes = {
   strIngredient: propTypes.string,
   idIngredient: propTypes.string,
 }.isRequired;
