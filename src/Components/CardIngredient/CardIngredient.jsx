@@ -7,7 +7,7 @@ export default function CardIngredient({ strIngredient, idIngredient, history })
   const { setRecipesByIng } = useContext(MyContext);
 
   return (
-    <div data-testid={ `${idIngredient}-ingredient-card` }>
+    <div>
       <button
         type="button"
         onClick={ async () => {
@@ -15,6 +15,7 @@ export default function CardIngredient({ strIngredient, idIngredient, history })
           setRecipesByIng(result);
           history.push('/foods');
         } }
+        data-testid={ `${idIngredient}-ingredient-card` }
       >
         <img
           src={ `https://www.themealdb.com/images/ingredients/${strIngredient}-Small.png` }

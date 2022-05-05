@@ -14,7 +14,7 @@ function MyProvider({ children }) {
   const [showSearch, setShowSearch] = useState(false);
   const [searched, setSearched] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [recipesByIng, setRecipesByIng] = useState(['teste']);
+  const [recipesByIng, setRecipesByIng] = useState([]);
 
   const handleRadio = ({ target }) => {
     setRadio(target.value);

@@ -19,10 +19,6 @@ export default function ExploreDrinksIngredients(props) {
     addIngredients();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(arrIngredients);
-  // }, [arrIngredients]);
-
   return (
     <div>
       <Header { ...props } title="Explore Ingredients" dontShowSearchIcon />
