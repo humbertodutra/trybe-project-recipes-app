@@ -8,7 +8,7 @@ import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
-function FoodsRecipe({ match }) {
+function FoodProgress({ match }) {
   const { params: { idRecipe } } = match;
   const {
     getApiDetails, details, arrayIngredients,
@@ -16,32 +16,57 @@ function FoodsRecipe({ match }) {
   } = useContext(MyContext);
 
   const [showCopyMessage, setShowCopyMessage] = useState(false);
-  const allIngredients = arrayIngredients.filterIngredients.map((elem, i) => (
-    `${elem[1]} ${arrayIngredients.filterMens[i][1]}`
-  ));
-
-  const numberAllIng = allIngredients.length;
 
   const initState = () => {
     const recipesInStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const recipesId = recipesInStorage.meals;
-    const isThere = Object.keys(recipesId).includes(idRecipe);
-    if (isThere) {
-      return allIngredients.map((elem) => (
-        !recipesInStorage.meals[idRecipe].includes(elem)
-      ));
+
+    if (recipesInStorage === null) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        meals: {}, cocktails: {},
+      }));
     }
-    return new Array(numberAllIng).fill(false);
+
+    if (arrayIngredients.filterIngredients) {
+      const allIngredients = arrayIngredients.filterIngredients.map((elem, i) => (
+        `${elem[1]} ${arrayIngredients.filterMens[i][1]}`
+      ));
+
+      const numberAllIng = allIngredients.length;
+      const recipesId = recipesInStorage.meals;
+      const isThere = Object.keys(recipesId).includes(idRecipe);
+      if (isThere) {
+        const aux = allIngredients.map((elem) => (
+          recipesInStorage.meals[idRecipe].includes(elem)
+        ));
+        console.log(aux);
+        return aux;
+      }
+      return new Array(numberAllIng).fill(false);
+    }
   };
 
-  const [checked, setChecked] = useState(initState());
+  const [checked, setChecked] = useState([]);
+
+  useEffect(() => {
+    const requestDetails = async () => {
+      await getApiDetails(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idRecipe}`, 'meals');
+    };
+    requestDetails();
+  }, []);
+
+  useEffect(() => {
+    const aux = initState();
+    setChecked(aux);
+  }, [arrayIngredients]);
 
   const handleChange = (index) => {
+    const allIngredients = arrayIngredients.filterIngredients.map((elem, i) => (
+      `${elem[1]} ${arrayIngredients.filterMens[i][1]}`
+    ));
     const newChecked = [...checked];
     newChecked[index] = !checked[index];
     setChecked(newChecked);
-    const newIngredients = allIngredients.filter((_elem, i) => !newChecked[i]);
-    console.log(newIngredients);
+    const newIngredients = allIngredients.filter((_elem, i) => newChecked[i]);
 
     const recipesInStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const { meals, cocktails } = recipesInStorage;
@@ -55,13 +80,6 @@ function FoodsRecipe({ match }) {
   };
 
   // ------------------------------- componentDidMount Feature
-
-  useEffect(() => {
-    const requestDetails = async () => {
-      await getApiDetails(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idRecipe}`, 'meals');
-    };
-    requestDetails();
-  }, []);
 
   // ------------------------------- Progress Feature
 
@@ -110,7 +128,8 @@ function FoodsRecipe({ match }) {
 
   return (
     <div>
-      {(details.meals && arrayIngredients.filterIngredients) && (
+      {(details.meals && arrayIngredients.filterIngredients
+      && checked && checked.length > 0) && (
         <div className={ styles.container }>
           <img
             src={ details.meals[0].strMealThumb }
@@ -124,7 +143,7 @@ function FoodsRecipe({ match }) {
             type="button"
             data-testid="share-btn"
             onClick={ () => {
-              copy(`http://localhost:3000${history.location.pathname}`);
+              copy(`http://localhost:3000/foods/${details.meals[0].idMeal}`);
               setShowCopyMessage(true);
             } }
           >
@@ -190,7 +209,11 @@ function FoodsRecipe({ match }) {
           <button
             type="button"
             data-testid="finish-recipe-btn"
-            onClick={ (e) => e.preventDefault() }
+            onClick={ (e) => {
+              e.preventDefault();
+              history.push('/done-recipes');
+            } }
+            disabled={ checked.some((elem) => !elem) }
           >
             Finish Recipe
           </button>
@@ -200,7 +223,7 @@ function FoodsRecipe({ match }) {
   );
 }
 
-FoodsRecipe.propTypes = {
+FoodProgress.propTypes = {
   match: propTypes.shape({
     params: propTypes.shape({
       idRecipe: propTypes.number,
@@ -208,4 +231,4 @@ FoodsRecipe.propTypes = {
   }),
 }.isRequired;
 
-export default FoodsRecipe;
+export default FoodProgress;

@@ -48,15 +48,12 @@ function FoodsRecipe({ match }) {
   };
 
   const startRecipe = () => {
-    const { filterIngredients, filterMens } = arrayIngredients;
     const { meals, cocktails } = findStartedRecipeInStorage();
     const newStartedFoodRecipes = {
       cocktails,
       meals: {
         ...meals,
-        [details.meals[0].idMeal]: filterIngredients.map((element, index) => (
-          `${element[1]} ${filterMens[index][1]}`
-        )),
+        [details.meals[0].idMeal]: [],
       },
     };
 

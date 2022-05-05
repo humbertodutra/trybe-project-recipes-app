@@ -1,58 +1,89 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import MyContext from '../../context/MyContext';
-import CardRecommend from '../../Components/CardRecommend/CardRecommend';
-import styles from './DrinksRecipe.module.css';
+import styles from './DrinkProgress.module.css';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
-function DrinksRecipe({ match }) {
+function DrinkProgress({ match }) {
   const { params: { idRecipe } } = match;
   const {
-    getApiDetails, details, arrayIngredients, getApiRecomend,
-    recommend, setStartedRecepies, favorite, setFavorite,
+    getApiDetails, details, arrayIngredients,
+    favorite, setFavorite,
   } = useContext(MyContext);
 
   const [showCopyMessage, setShowCopyMessage] = useState(false);
 
+  const initState = () => {
+    const recipesInStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+    if (recipesInStorage === null) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        meals: {}, cocktails: {},
+      }));
+    }
+
+    if (arrayIngredients.filterIngredients) {
+      const allIngredients = arrayIngredients.filterIngredients.map((elem, i) => (
+        `${elem[1]} ${arrayIngredients.filterMens[i][1]}`
+      ));
+
+      const numberAllIng = allIngredients.length;
+      const recipesId = recipesInStorage.cocktails;
+      const isThere = Object.keys(recipesId).includes(idRecipe);
+      if (isThere) {
+        const aux = allIngredients.map((elem) => (
+          recipesInStorage.cocktails[idRecipe].includes(elem)
+        ));
+        console.log(aux);
+        return aux;
+      }
+      return new Array(numberAllIng).fill(false);
+    }
+  };
+
+  const [checked, setChecked] = useState([]);
+
   useEffect(() => {
     const requestDetails = async () => {
-      await getApiDetails(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idRecipe}`, 'drinks');
+      await getApiDetails(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idRecipe}`, 'drinks');
     };
     requestDetails();
-    getApiRecomend('https://www.themealdb.com/api/json/v1/1/search.php?s=', 'meals');
-  }, [getApiDetails, idRecipe, getApiRecomend]);
+  }, []);
 
-  const findStartedRecipeInStorage = () => {
-    const recepiesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (recepiesInProgress !== null) {
-      return JSON.parse(localStorage.getItem('inProgressRecipes'));
-    }
-    return { meals: {}, cocktails: {} };
-  };
+  useEffect(() => {
+    const aux = initState();
+    setChecked(aux);
+  }, [arrayIngredients]);
 
-  const alreadyStarted = () => {
-    const { cocktails } = findStartedRecipeInStorage();
-    return Object.keys(cocktails).includes(details.drinks[0].idDrink);
-  };
+  const handleChange = (index) => {
+    const allIngredients = arrayIngredients.filterIngredients.map((elem, i) => (
+      `${elem[1]} ${arrayIngredients.filterMens[i][1]}`
+    ));
+    const newChecked = [...checked];
+    newChecked[index] = !checked[index];
+    setChecked(newChecked);
+    const newIngredients = allIngredients.filter((_elem, i) => newChecked[i]);
 
-  const startRecipe = () => {
-    const { meals, cocktails } = findStartedRecipeInStorage();
-    const newStartedDrinkRecipes = {
-      meals,
+    const recipesInStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const { meals, cocktails } = recipesInStorage;
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      ...meals,
       cocktails: {
         ...cocktails,
-        [details.drinks[0].idDrink]: [],
+        [idRecipe]: newIngredients,
       },
-    };
-
-    localStorage.setItem('inProgressRecipes', JSON.stringify(newStartedDrinkRecipes));
-    setStartedRecepies(newStartedDrinkRecipes);
+    }));
   };
 
+  // ------------------------------- componentDidMount Feature
+
+  // ------------------------------- Progress Feature
+
+  // ------------------------------- Favorite Feature
   const findFavoriteRecipeInStorage = () => {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favoriteRecipes !== null) {
@@ -64,11 +95,11 @@ function DrinksRecipe({ match }) {
   const alreadyFavorite = () => {
     const favoriteRecipes = findFavoriteRecipeInStorage();
     return favoriteRecipes.map(({ id }) => id)
-      .includes(details.drinks[0].idDrink);
+      .includes(details.meals[0].idDrink);
   };
 
   const favoriteRecipe = () => {
-    const newFavoriteFoodRecipes = [
+    const newFavoriteDrinkRecipes = [
       ...favorite,
       {
         id: details.drinks[0].idDrink,
@@ -80,8 +111,8 @@ function DrinksRecipe({ match }) {
         image: details.drinks[0].strDrinkThumb,
       },
     ];
-    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteFoodRecipes));
-    setFavorite(newFavoriteFoodRecipes);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteDrinkRecipes));
+    setFavorite(newFavoriteDrinkRecipes);
   };
 
   const unfavoriteRecipe = () => {
@@ -97,8 +128,8 @@ function DrinksRecipe({ match }) {
 
   return (
     <div>
-      {details.drinks && arrayIngredients.filterIngredients && recommend.length > 0
-      && (
+      {(details.meals && arrayIngredients.filterIngredients
+      && checked && checked.length > 0) && (
         <div className={ styles.container }>
           <img
             src={ details.drinks[0].strDrinkThumb }
@@ -112,7 +143,7 @@ function DrinksRecipe({ match }) {
             type="button"
             data-testid="share-btn"
             onClick={ () => {
-              copy(`http://localhost:3000${history.location.pathname}`);
+              copy(`http://localhost:3000/foods/${details.meals[0].idMeal}`);
               setShowCopyMessage(true);
             } }
           >
@@ -148,57 +179,51 @@ function DrinksRecipe({ match }) {
 
           <p data-testid="recipe-category">{details.drinks[0].strAlcoholic}</p>
 
-          <ul>
+          <ul className={ styles.container_drinks }>
             {arrayIngredients.filterIngredients.map((elem, i) => (
-              <li
+              <label
+                htmlFor={ `${i}-ingredient-step` }
                 key={ elem }
-                data-testid={ `${i}-ingredient-name-and-measure` }
+                data-testid={ `${i}-ingredient-step` }
               >
-                {elem[1]}
-                {arrayIngredients.filterMens[i][1]}
-              </li>
+                <input
+                  type="checkbox"
+                  id={ `${i}-ingredient-step` }
+                  checked={ checked[i] }
+                  onChange={ () => {
+                    handleChange(i);
+                  } }
+                />
+                <span>
+                  {elem[1]}
+                  {' '}
+                  {arrayIngredients.filterMens[i][1]}
+                </span>
+              </label>
+
             ))}
           </ul>
 
           <p data-testid="instructions">{details.drinks[0].strInstructions}</p>
 
-          <h3>Recommendation Recipes</h3>
-
-          <ul className={ styles.container_carrousel }>
-            {recommend.map((elem, index) => (
-              <li key={ elem.idMeal } data-testid={ `${index}-recomendation-card` }>
-                <CardRecommend
-                  index={ index }
-                  strMealOrDrink={ elem.strMeal }
-                  strMealOrDrinkThumb={ elem.strMealThumb }
-                  id={ elem.idMeal }
-                  prevPath="foods"
-                />
-              </li>
-            ))}
-          </ul>
           <button
             type="button"
-            data-testid="start-recipe-btn"
-            className={ styles.button_start }
-            onClick={ () => {
-              if (!alreadyStarted()) {
-                startRecipe();
-              }
-              history.push(`/drinks/${details.drinks[0].idDrink}/in-progress`);
+            data-testid="finish-recipe-btn"
+            onClick={ (e) => {
+              e.preventDefault();
+              history.push('/done-recipes');
             } }
+            disabled={ checked.some((elem) => !elem) }
           >
-            {
-              alreadyStarted() ? (
-                'Continue Recipe') : ('Start Recipe')
-            }
+            Finish Recipe
           </button>
-        </div>)}
+        </div>
+      )}
     </div>
   );
 }
 
-DrinksRecipe.propTypes = {
+DrinkProgress.propTypes = {
   match: propTypes.shape({
     params: propTypes.shape({
       idRecipe: propTypes.number,
@@ -206,4 +231,4 @@ DrinksRecipe.propTypes = {
   }),
 }.isRequired;
 
-export default DrinksRecipe;
+export default DrinkProgress;
