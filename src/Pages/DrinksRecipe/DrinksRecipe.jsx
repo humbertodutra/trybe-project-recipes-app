@@ -182,10 +182,8 @@ function DrinksRecipe({ match }) {
             data-testid="start-recipe-btn"
             className={ styles.button_start }
             onClick={ () => {
-              if (!alreadyStarted()) {
-                startRecipe();
-              }
-              history.push(`/drinks/${details.drinks[0].idDrink}/in-progress`);
+              startRecipe();
+              history.push(`${details.drinks[0].idDrink}/in-progress`);
             } }
           >
             {
