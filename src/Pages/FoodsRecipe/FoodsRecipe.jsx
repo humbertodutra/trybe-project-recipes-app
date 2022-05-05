@@ -166,6 +166,7 @@ function FoodsRecipe({ match }) {
                 data-testid={ `${i}-ingredient-name-and-measure` }
               >
                 {elem[1]}
+                {' '}
                 {arrayIngredients.filterMens[i][1]}
               </li>
             ))}
@@ -202,8 +203,10 @@ function FoodsRecipe({ match }) {
             data-testid="start-recipe-btn"
             className={ styles.button_start }
             onClick={ () => {
-              startRecipe();
-              history.push(`${details.meals[0].idMeal}/in-progress`);
+              if (!alreadyStarted()) {
+                startRecipe();
+              }
+              history.push(`/foods/${details.meals[0].idMeal}/in-progress`);
             } }
           >
             {

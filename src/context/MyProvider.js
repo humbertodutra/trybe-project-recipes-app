@@ -65,11 +65,13 @@ function MyProvider({ children }) {
     setDetails(data);
     const array = Object.entries(data[type][0]);
     const filterIngredients = array.filter(
-      (elem) => elem[0].includes('strIngredient')
-      && elem[1] !== '',
+      (elem) => (elem[0].includes('strIngredient') && !(
+        elem[1] === '' || elem[1] === null)),
     );
-    const filterMens = array
-      .filter((elem) => elem[0].includes('strMeasure') && elem[1] !== '');
+    const filterMens = array.filter(
+      (elem) => (elem[0].includes('strMeasure') && !(
+        elem[1] === '' || elem[1] === null)),
+    );
     setArrayIngredients({ filterIngredients, filterMens });
   }, []);
 
@@ -171,6 +173,7 @@ function MyProvider({ children }) {
     setStartedRecepies,
     favorite,
     setFavorite,
+    setDetails,
   };
   return (
     <MyContext.Provider value={ context }>
