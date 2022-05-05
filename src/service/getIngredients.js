@@ -16,3 +16,9 @@ export const fetchDrinksIngredients = async () => {
   const { drinks } = await fetch(url).then((response) => response.json());
   return drinks;
 };
+
+export const fetchDrinksRecipes = async (ingredient) => {
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`;
+  const { drinks } = await fetch(url).then((response) => response.json());
+  return drinks;
+};

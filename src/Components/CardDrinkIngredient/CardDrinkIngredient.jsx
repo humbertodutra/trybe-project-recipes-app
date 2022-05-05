@@ -1,5 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
+// import MyContext from '../../context/MyContext';
+// import { fetchDrinksRecipes } from '../../service/getIngredients';
 
 export default function CardDrinkIngredient({ strIngredient, idIngredient }) {
   return (

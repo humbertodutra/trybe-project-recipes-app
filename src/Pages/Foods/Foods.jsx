@@ -29,6 +29,19 @@ export default function Foods(props) {
         selectedCategory={ selectedCategory }
         setSelectedCategory={ setSelectedCategory }
       />
+      {/* { recipesByIng
+        && (recipesByIng.map((e, index) => (
+          index < lengthFood && (
+            <CardRecipes
+              prevPath="foods"
+              index={ index }
+              strMealOrDrink={ e.strMeal }
+              strMealOrDrinkThumb={ e.strMealThumb }
+              key={ e.idMeal }
+              id={ e.idMeal }
+            />
+          )))
+        )} */}
       {categories.meals && categories.meals.map((elem, index) => (
         (index < lengthCategories && !showSearch) && (
           <CardCategories
@@ -57,19 +70,6 @@ export default function Foods(props) {
           recipes.meals[0].idMeal
         }` }
       />}
-      {/* { recipesByIng
-      && (recipesByIng.map((e, index) => (
-        index < lengthFood && (
-          <CardRecipes
-            prevPath="foods"
-            index={ index }
-            strMealOrDrink={ e.strMeal }
-            strMealOrDrinkThumb={ e.strMealThumb }
-            key={ e.idMeal }
-            id={ e.idMeal }
-          />
-        )))
-      )} */}
       <Footer />
     </div>
   );
