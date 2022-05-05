@@ -13,7 +13,7 @@ function FoodsRecipe({ match }) {
   const { params: { idRecipe } } = match;
   const {
     getApiDetails, details, arrayIngredients, getApiRecomend,
-    recommend, setStartedRecepies, favorite, setFavorite,
+    recommend, setStartedRecepies, favorite, setFavorite, unfavoriteRecipe,
   } = useContext(MyContext);
 
   const [showCopyMessage, setShowCopyMessage] = useState(false);
@@ -91,15 +91,6 @@ function FoodsRecipe({ match }) {
     ];
     localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteFoodRecipes));
     setFavorite(newFavoriteFoodRecipes);
-  };
-
-  const unfavoriteRecipe = () => {
-    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const newFavorites = favoriteRecipes.filter((element) => (
-      element.id !== details.meals[0].idMeal
-    ));
-    setFavorite(newFavorites);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
   };
 
   const history = useHistory();

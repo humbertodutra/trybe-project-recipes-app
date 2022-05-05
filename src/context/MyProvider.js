@@ -19,6 +19,7 @@ function MyProvider({ children }) {
   const [recommend, setRecommend] = useState({});
   const [startedRecepies, setStartedRecepies] = useState({ meals: {}, cocktails: {} });
   const [favorite, setFavorite] = useState([]);
+  const [filterFavorite, setfilterFavorite] = useState([]);
 
   const handleRadio = ({ target }) => {
     setRadio(target.value);
@@ -134,6 +135,26 @@ function MyProvider({ children }) {
     return data;
   }, []);
 
+  const unfavoriteRecipe = (id = details.meals[0].idMeal) => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const newFavorites = favoriteRecipes.filter((element) => (
+      element.id !== id
+    ));
+    setFavorite(newFavorites);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+  };
+
+  const funcFavorite = () => JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+  const filter = (recipeType) => {
+    if (recipeType === undefined) {
+      console.log('entrou');
+      return funcFavorite();
+    }
+    const arrayFilter = funcFavorite().filter((elem) => elem.type === recipeType);
+    setfilterFavorite(arrayFilter);
+  };
+
   const context = {
     email,
     password,
@@ -171,6 +192,9 @@ function MyProvider({ children }) {
     setStartedRecepies,
     favorite,
     setFavorite,
+    unfavoriteRecipe,
+    filter,
+    filterFavorite,
   };
   return (
     <MyContext.Provider value={ context }>
