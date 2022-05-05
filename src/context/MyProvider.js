@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import propTypes from 'prop-types';
 import MyContext from './MyContext';
+import { fetchIngredients, fetchDrinksIngredients } from '../service/getIngredients';
 
 function MyProvider({ children }) {
   const [email, setEmail] = useState('');
@@ -14,6 +15,7 @@ function MyProvider({ children }) {
   const [showSearch, setShowSearch] = useState(false);
   const [searched, setSearched] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [recipesByIng, setRecipesByIng] = useState([]);
   const [details, setDetails] = useState({});
   const [arrayIngredients, setArrayIngredients] = useState({});
   const [recommend, setRecommend] = useState({});
@@ -181,6 +183,10 @@ function MyProvider({ children }) {
     searched,
     setSearched,
     exploreRandom,
+    fetchIngredients,
+    fetchDrinksIngredients,
+    recipesByIng,
+    setRecipesByIng,
     getApiDetails,
     details,
     arrayIngredients,
