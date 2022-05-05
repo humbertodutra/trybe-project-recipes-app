@@ -72,7 +72,6 @@ export default function Foods(props) {
             )))}
         </>
       )}
-
       <Footer />
     </div>
   );

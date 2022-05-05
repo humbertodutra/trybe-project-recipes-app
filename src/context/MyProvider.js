@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import propTypes from 'prop-types';
 import MyContext from './MyContext';
 import { fetchIngredients, fetchDrinksIngredients } from '../service/getIngredients';
@@ -11,10 +11,17 @@ function MyProvider({ children }) {
   const [urlFoods, setUrlFoods] = useState({ ingredient: 'https://www.themealdb.com/api/json/v1/1/filter.php?i=', name: 'https://www.themealdb.com/api/json/v1/1/search.php?s=', firstLetter: 'https://www.themealdb.com/api/json/v1/1/search.php?f=' });
   const [urlDrinks, setUrlDrinks] = useState({ ingredient: 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=', name: 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=', firstLetter: 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=' });
   const [recipes, setRecipes] = useState({ meals: [], drinks: [] });
+  const [originalRecipes, setOriginalRecipes] = useState({ meals: [], drinks: [] });
   const [showSearch, setShowSearch] = useState(false);
   const [searched, setSearched] = useState(false);
   const [categories, setCategories] = useState([]);
   const [recipesByIng, setRecipesByIng] = useState([]);
+  const [details, setDetails] = useState({});
+  const [arrayIngredients, setArrayIngredients] = useState({});
+  const [recommend, setRecommend] = useState({});
+  const [startedRecepies, setStartedRecepies] = useState({ meals: {}, cocktails: {} });
+  const [favorite, setFavorite] = useState([]);
+  const [filterFavorite, setfilterFavorite] = useState([]);
 
   const handleRadio = ({ target }) => {
     setRadio(target.value);
@@ -40,6 +47,7 @@ function MyProvider({ children }) {
     ));
     const request = await fetch(url);
     const data = await request.json();
+    setOriginalRecipes(data);
     setRecipes(data);
     return data;
   };
@@ -53,6 +61,20 @@ function MyProvider({ children }) {
     setRecipes(data);
     return data;
   };
+
+  const getApiDetails = useCallback(async (url, type) => {
+    const request = await fetch(url);
+    const data = await request.json();
+    setDetails(data);
+    const array = Object.entries(data[type][0]);
+    const filterIngredients = array.filter(
+      (elem) => elem[0].includes('strIngredient')
+      && elem[1] !== '',
+    );
+    const filterMens = array
+      .filter((elem) => elem[0].includes('strMeasure') && elem[1] !== '');
+    setArrayIngredients({ filterIngredients, filterMens });
+  }, []);
 
   const getCategories = async (type) => {
     const url = (type === 'meals' ? (
@@ -106,6 +128,35 @@ function MyProvider({ children }) {
     return getApiFood(url, type);
   };
 
+  const getApiRecomend = useCallback(async (url, type) => {
+    const result = await fetch(url);
+    const data = await result.json();
+    const sixLength = 6;
+    const six = data[type].filter((_elem, i) => i < sixLength);
+    setRecommend(six);
+    return data;
+  }, []);
+
+  const unfavoriteRecipe = (id = details.meals[0].idMeal) => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const newFavorites = favoriteRecipes.filter((element) => (
+      element.id !== id
+    ));
+    setFavorite(newFavorites);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+  };
+
+  const funcFavorite = () => JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+  const filter = (recipeType) => {
+    if (recipeType === undefined) {
+      console.log('entrou');
+      return funcFavorite();
+    }
+    const arrayFilter = funcFavorite().filter((elem) => elem.type === recipeType);
+    setfilterFavorite(arrayFilter);
+  };
+
   const context = {
     email,
     password,
@@ -136,6 +187,20 @@ function MyProvider({ children }) {
     fetchDrinksIngredients,
     recipesByIng,
     setRecipesByIng,
+    getApiDetails,
+    details,
+    arrayIngredients,
+    getApiRecomend,
+    recommend,
+    originalRecipes,
+    setOriginalRecipes,
+    startedRecepies,
+    setStartedRecepies,
+    favorite,
+    setFavorite,
+    unfavoriteRecipe,
+    filter,
+    filterFavorite,
   };
   return (
     <MyContext.Provider value={ context }>

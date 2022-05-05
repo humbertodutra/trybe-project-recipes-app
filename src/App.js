@@ -16,6 +16,7 @@ import ExploreFoodsIngredients from './Pages/Explore/ExploreFoodsIngredients';
 import ExploreFoodsNationalities from './Pages/Explore/ExploreFoodsNacionalities';
 import FoodsRecipe from './Pages/FoodsRecipe/FoodsRecipe';
 import DrinksRecipe from './Pages/DrinksRecipe/DrinksRecipe';
+import FoodProgress from './Pages/FoodProgress/FoodProgress';
 
 function App() {
   return (
@@ -45,11 +46,11 @@ function App() {
         path="/drinks/:idRecipe"
         render={ (props) => <DrinksRecipe { ...props } /> }
       />
-      {/* <Route
+      <Route
         exact
-        path="/foods/:id-da-receita/in-progress"
-        component={ FoodProgress }
-      /> */}
+        path="/foods/:idRecipe/in-progress"
+        render={ (props) => <FoodProgress { ...props } /> }
+      />
       {/* <Route
         exact
         path="/drinks/:id-da-receita/in-progress"
