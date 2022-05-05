@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import propTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import share from '../../images/shareIcon.svg';
@@ -12,16 +12,13 @@ export default function CardFavorite(
   { image, title, category, nationality, alcoholic, type, index, id },
 ) {
   const { unfavoriteRecipe } = useContext(MyContext);
+  const [copiedLink, setcopiedLink] = useState(false);
 
-  const copied = async () => {
+  const copied = () => {
     const url = `http://localhost:3000/${type}s/${id}`;
     copy(url);
-    global.alert('Link copied!');
+    setcopiedLink(true);
   };
-
-  // const route = () => {
-  //   history.push(`/${type}s/${id}`);
-  // };
 
   return (
     <div>
@@ -53,6 +50,7 @@ export default function CardFavorite(
         <img src={ share } alt="profileIcon" />
 
       </button>
+      {copiedLink && <span>Link copied!</span>}
       <button
         type="button"
         data-testid={ `${index}-horizontal-favorite-btn` }
