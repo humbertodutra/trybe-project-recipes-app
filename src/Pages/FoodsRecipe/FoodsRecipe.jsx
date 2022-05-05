@@ -43,8 +43,8 @@ function FoodsRecipe({ match }) {
   };
 
   const alreadyStarted = () => {
-    const { meals } = findStartedRecipeInStorage();
-    return Object.keys(meals).includes(details.meals[0].idMeal);
+    const aux = findStartedRecipeInStorage();
+    return Object.keys(aux.meals).includes(details.meals[0].idMeal);
   };
 
   const startRecipe = () => {
