@@ -14,51 +14,55 @@ export default function FavoriteRecipes(props) {
   return (
     <div>
       <Header { ...props } title="Favorite Recipes" dontShowSearchIcon />
-      <form>
-        <button
-          type="button"
-          data-testid="filter-by-all-btn"
-          onClick={ filter }
-        >
-          All
+      { verifyFilter() && (
+        <div>
+          <form>
+            <button
+              type="button"
+              data-testid="filter-by-all-btn"
+              onClick={ filter }
+            >
+              All
 
-        </button>
-        <button
-          type="button"
-          data-testid="filter-by-food-btn"
-          onClick={ () => filter('food') }
-        >
-          Food
+            </button>
+            <button
+              type="button"
+              data-testid="filter-by-food-btn"
+              onClick={ () => filter('food') }
+            >
+              Food
 
-        </button>
-        <button
-          type="button"
-          data-testid="filter-by-drink-btn"
-          onClick={ () => filter('drink') }
-        >
-          Drinks
+            </button>
+            <button
+              type="button"
+              data-testid="filter-by-drink-btn"
+              onClick={ () => filter('drink') }
+            >
+              Drinks
 
-        </button>
-      </form>
-      <ul>
-        {
-          verifyFilter().map((elem, index) => (
-            <li key={ elem.id }>
-              <CardFavorite
-                image={ elem.image }
-                type={ elem.type }
-                nationality={ elem.nationality }
-                category={ elem.category }
-                alcoholic={ elem.alcoholicOrNot }
-                title={ elem.name }
-                index={ index }
-                id={ elem.id }
-                { ...props }
-              />
-            </li>
-          ))
-        }
-      </ul>
+            </button>
+          </form>
+          <ul>
+            {
+              verifyFilter().map((elem, index) => (
+                <li key={ elem.id }>
+                  <CardFavorite
+                    image={ elem.image }
+                    type={ elem.type }
+                    nationality={ elem.nationality }
+                    category={ elem.category }
+                    alcoholic={ elem.alcoholicOrNot }
+                    title={ elem.name }
+                    index={ index }
+                    id={ elem.id }
+                    { ...props }
+                  />
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
