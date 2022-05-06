@@ -19,7 +19,6 @@ function MyProvider({ children }) {
   const [details, setDetails] = useState({});
   const [arrayIngredients, setArrayIngredients] = useState({});
   const [recommend, setRecommend] = useState({});
-  const [startedRecepies, setStartedRecepies] = useState({ meals: {}, cocktails: {} });
   const [favorite, setFavorite] = useState([]);
   const [filterFavorite, setfilterFavorite] = useState([]);
 
@@ -68,12 +67,15 @@ function MyProvider({ children }) {
     setDetails(data);
     const array = Object.entries(data[type][0]);
     const filterIngredients = array.filter(
-      (elem) => elem[0].includes('strIngredient')
-      && elem[1] !== '',
+      (elem) => (elem[0].includes('strIngredient') && !(
+        elem[1] === '' || elem[1] === null)),
     );
-    const filterMens = array
-      .filter((elem) => elem[0].includes('strMeasure') && elem[1] !== '');
+    const filterMens = array.filter(
+      (elem) => (elem[0].includes('strMeasure') && !(
+        elem[1] === '' || elem[1] === null)),
+    );
     setArrayIngredients({ filterIngredients, filterMens });
+    console.log(arrayIngredients);
   }, []);
 
   const getCategories = async (type) => {
@@ -194,10 +196,9 @@ function MyProvider({ children }) {
     recommend,
     originalRecipes,
     setOriginalRecipes,
-    startedRecepies,
-    setStartedRecepies,
     favorite,
     setFavorite,
+    setDetails,
     unfavoriteRecipe,
     filter,
     filterFavorite,
