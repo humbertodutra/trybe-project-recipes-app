@@ -13,7 +13,7 @@ function FoodProgress({ match }) {
   const { params: { idRecipe } } = match;
   const {
     getApiDetails, details, arrayIngredients,
-    favorite, setFavorite,
+    favorite, setFavorite, setdoneRecipes, doneRecipes,
   } = useContext(MyContext);
 
   const [showCopyMessage, setShowCopyMessage] = useState(false);
@@ -25,12 +25,18 @@ function FoodProgress({ match }) {
       await getApiDetails(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idRecipe}`, 'meals');
     };
     requestDetails();
+    console.log(details);
   }, []);
 
   useEffect(() => {
     const aux = initState(arrayIngredients, idRecipe, 'meals');
     setChecked(aux);
   }, [arrayIngredients]);
+
+  // useEffect(() => {
+  //   localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+  //   console.log(doneRecipes);
+  // }, [doneRecipes]);
 
   const handleChange = (index) => {
     const allIngredients = arrayIngredients.filterIngredients.map((elem, i) => (
@@ -179,7 +185,9 @@ function FoodProgress({ match }) {
             type="button"
             data-testid="finish-recipe-btn"
             onClick={ (e) => {
+              const { meals } = details;
               e.preventDefault();
+              setdoneRecipes([...doneRecipes, meals[0]]);
               history.push('/done-recipes');
             } }
             disabled={ checked.some((elem) => !elem) }
