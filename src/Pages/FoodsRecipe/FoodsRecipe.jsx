@@ -43,8 +43,8 @@ function FoodsRecipe({ match }) {
   };
 
   const alreadyStarted = () => {
-    const { meals } = findStartedRecipeInStorage();
-    return Object.keys(meals).includes(details.meals[0].idMeal);
+    const aux = findStartedRecipeInStorage();
+    return Object.keys(aux.meals).includes(details.meals[0].idMeal);
   };
 
   const startRecipe = () => {
@@ -96,7 +96,7 @@ function FoodsRecipe({ match }) {
     localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteFoodRecipes));
     setFavorite(newFavoriteFoodRecipes);
   };
-  
+
   const unfavoriteRecipe = () => {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const newFavorites = favoriteRecipes.filter((element) => (
