@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import App from './App';
 import ExploreDrinks from './Pages/Explore/ExploreDrinks';
+import drinks from './mocks/drinks.json';
 
 const EXPLORE_DRINKS = '/explore/drinks';
 
@@ -32,6 +33,12 @@ describe('Testes da tela Explore Drinks', () => {
 
   it(`Ao clicar em "Surprise me!", a rota deve mudar para a tela de detalhes de uma
    receita, que deve ser escolhida de forma aleatória através da API`, () => {
-
+    const surprise = jest.spyOn(global, 'fetch')
+      .mockResolvedValue({ json: jest.fn().mockResolvedValue(drinks) });
+    const { history } = renderWithRouter(<App />);
+    history.push(EXPLORE_DRINKS);
+    const btnSurprise = screen.getByTestId('explore-surprise');
+    userEvent.click(btnSurprise);
+    expect(surprise).toHaveBeenCalled();
   });
 });

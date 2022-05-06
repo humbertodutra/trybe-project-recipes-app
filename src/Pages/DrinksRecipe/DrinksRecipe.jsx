@@ -9,14 +9,20 @@ import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
-function FoodsRecipe({ match }) {
+function DrinksRecipe({ match }) {
   const { params: { idRecipe } } = match;
   const {
     getApiDetails, details, arrayIngredients, getApiRecomend,
-    recommend, setStartedRecepies, favorite, setFavorite,
+    recommend, favorite, setFavorite,
   } = useContext(MyContext);
 
   const [showCopyMessage, setShowCopyMessage] = useState(false);
+
+  const validIngredients = () => arrayIngredients.filterIngredients.map((elem, i) => (
+    arrayIngredients.filterMens[i] ? `${elem[1]} ${arrayIngredients.filterMens[i][1]}` : (
+      `${elem[1]}`
+    )
+  ));
 
   useEffect(() => {
     const requestDetails = async () => {
@@ -31,7 +37,7 @@ function FoodsRecipe({ match }) {
     if (recepiesInProgress !== null) {
       return JSON.parse(localStorage.getItem('inProgressRecipes'));
     }
-    return { meals: {}, cocktails: {} };
+    return { cocktails: { [details.drinks[0].idDrinks]: [] }, meals: { } };
   };
 
   const alreadyStarted = () => {
@@ -40,18 +46,22 @@ function FoodsRecipe({ match }) {
   };
 
   const startRecipe = () => {
-    const { filterIngredients } = arrayIngredients;
-    const { meals, cocktails } = findStartedRecipeInStorage();
-    const newStartedDrinkRecipes = {
-      meals,
+    const recipesInStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+    if (recipesInStorage === null) {
+      return localStorage.setItem('inProgressRecipes', JSON.stringify({
+        meals: {}, cocktails: { [idRecipe]: [] },
+      }));
+    }
+
+    const { meals, cocktails } = recipesInStorage;
+    return localStorage.setItem('inProgressRecipes', JSON.stringify({
       cocktails: {
         ...cocktails,
-        [details.drinks[0].idDrink]: filterIngredients.map((element) => element[1]),
+        [idRecipe]: [],
       },
-    };
-
-    localStorage.setItem('inProgressRecipes', JSON.stringify(newStartedDrinkRecipes));
-    setStartedRecepies(newStartedDrinkRecipes);
+      meals,
+    }));
   };
 
   const findFavoriteRecipeInStorage = () => {
@@ -126,10 +136,9 @@ function FoodsRecipe({ match }) {
             tabIndex="0"
             onClick={ () => {
               if (alreadyFavorite()) {
-                unfavoriteRecipe();
-              } else {
-                favoriteRecipe();
+                return unfavoriteRecipe();
               }
+              return favoriteRecipe();
             } }
           >
             {alreadyFavorite() ? (
@@ -150,13 +159,12 @@ function FoodsRecipe({ match }) {
           <p data-testid="recipe-category">{details.drinks[0].strAlcoholic}</p>
 
           <ul>
-            {arrayIngredients.filterIngredients.map((elem, i) => (
+            {validIngredients().map((elem, i) => (
               <li
                 key={ elem }
                 data-testid={ `${i}-ingredient-name-and-measure` }
               >
-                {elem[1]}
-                {arrayIngredients.filterMens[i][1]}
+                {elem}
               </li>
             ))}
           </ul>
@@ -178,13 +186,14 @@ function FoodsRecipe({ match }) {
               </li>
             ))}
           </ul>
+
           <button
             type="button"
             data-testid="start-recipe-btn"
             className={ styles.button_start }
             onClick={ () => {
               startRecipe();
-              history.push(`${details.drinks[0].idDrink}/in-progress`);
+              history.push(`/drinks/${details.drinks[0].idDrink}/in-progress`);
             } }
           >
             {
@@ -197,7 +206,7 @@ function FoodsRecipe({ match }) {
   );
 }
 
-FoodsRecipe.propTypes = {
+DrinksRecipe.propTypes = {
   match: propTypes.shape({
     params: propTypes.shape({
       idRecipe: propTypes.number,
@@ -205,4 +214,4 @@ FoodsRecipe.propTypes = {
   }),
 }.isRequired;
 
-export default FoodsRecipe;
+export default DrinksRecipe;

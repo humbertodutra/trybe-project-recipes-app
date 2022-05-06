@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import propTypes from 'prop-types';
 import MyContext from './MyContext';
+import { fetchIngredients, fetchDrinksIngredients } from '../service/getIngredients';
 
 function MyProvider({ children }) {
   const [email, setEmail] = useState('');
@@ -14,11 +15,12 @@ function MyProvider({ children }) {
   const [showSearch, setShowSearch] = useState(false);
   const [searched, setSearched] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [recipesByIng, setRecipesByIng] = useState([]);
   const [details, setDetails] = useState({});
   const [arrayIngredients, setArrayIngredients] = useState({});
   const [recommend, setRecommend] = useState({});
-  const [startedRecepies, setStartedRecepies] = useState({ meals: {}, cocktails: {} });
   const [favorite, setFavorite] = useState([]);
+  const [filterFavorite, setfilterFavorite] = useState([]);
 
   const handleRadio = ({ target }) => {
     setRadio(target.value);
@@ -65,12 +67,15 @@ function MyProvider({ children }) {
     setDetails(data);
     const array = Object.entries(data[type][0]);
     const filterIngredients = array.filter(
-      (elem) => elem[0].includes('strIngredient')
-      && elem[1] !== '',
+      (elem) => (elem[0].includes('strIngredient') && !(
+        elem[1] === '' || elem[1] === null)),
     );
-    const filterMens = array
-      .filter((elem) => elem[0].includes('strMeasure') && elem[1] !== '');
+    const filterMens = array.filter(
+      (elem) => (elem[0].includes('strMeasure') && !(
+        elem[1] === '' || elem[1] === null)),
+    );
     setArrayIngredients({ filterIngredients, filterMens });
+    console.log(arrayIngredients);
   }, []);
 
   const getCategories = async (type) => {
@@ -134,6 +139,26 @@ function MyProvider({ children }) {
     return data;
   }, []);
 
+  const unfavoriteRecipe = (id = details.meals[0].idMeal) => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const newFavorites = favoriteRecipes.filter((element) => (
+      element.id !== id
+    ));
+    setFavorite(newFavorites);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+  };
+
+  const funcFavorite = () => JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+  const filter = (recipeType) => {
+    if (recipeType === undefined) {
+      console.log('entrou');
+      return funcFavorite();
+    }
+    const arrayFilter = funcFavorite().filter((elem) => elem.type === recipeType);
+    setfilterFavorite(arrayFilter);
+  };
+
   const context = {
     email,
     password,
@@ -160,6 +185,10 @@ function MyProvider({ children }) {
     searched,
     setSearched,
     exploreRandom,
+    fetchIngredients,
+    fetchDrinksIngredients,
+    recipesByIng,
+    setRecipesByIng,
     getApiDetails,
     details,
     arrayIngredients,
@@ -167,10 +196,12 @@ function MyProvider({ children }) {
     recommend,
     originalRecipes,
     setOriginalRecipes,
-    startedRecepies,
-    setStartedRecepies,
     favorite,
     setFavorite,
+    setDetails,
+    unfavoriteRecipe,
+    filter,
+    filterFavorite,
   };
   return (
     <MyContext.Provider value={ context }>

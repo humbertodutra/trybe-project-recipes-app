@@ -2,13 +2,13 @@ import React, { useContext, useState, useEffect } from 'react';
 import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import MyContext from '../../context/MyContext';
-import styles from './FoodProgress.module.css';
+import styles from './DrinkProgress.module.css';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
-function FoodProgress({ match }) {
+function DrinkProgress({ match }) {
   const { params: { idRecipe } } = match;
   const {
     getApiDetails, details, arrayIngredients,
@@ -22,7 +22,7 @@ function FoodProgress({ match }) {
 
     if (recipesInStorage === null) {
       localStorage.setItem('inProgressRecipes', JSON.stringify({
-        meals: { [idRecipe]: [] }, cocktails: {},
+        meals: {}, cocktails: { [idRecipe]: [] },
       }));
     }
 
@@ -33,11 +33,11 @@ function FoodProgress({ match }) {
       ));
 
       const numberAllIng = allIngredients.length;
-      const recipesId = recipesInStorage.meals;
+      const recipesId = recipesInStorage.cocktails;
       const isThere = Object.keys(recipesId).includes(idRecipe);
       if (isThere) {
         const aux = allIngredients.map((elem) => (
-          recipesInStorage.meals[idRecipe].includes(elem)
+          recipesInStorage.cocktails[idRecipe].includes(elem)
         ));
         return aux;
       }
@@ -49,7 +49,7 @@ function FoodProgress({ match }) {
 
   useEffect(() => {
     const requestDetails = async () => {
-      await getApiDetails(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idRecipe}`, 'meals');
+      await getApiDetails(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idRecipe}`, 'drinks');
     };
     requestDetails();
   }, []);
@@ -73,9 +73,9 @@ function FoodProgress({ match }) {
     const recipesInStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const { meals, cocktails } = recipesInStorage;
     localStorage.setItem('inProgressRecipes', JSON.stringify({
-      cocktails,
-      meals: {
-        ...meals,
+      meals,
+      cocktails: {
+        ...cocktails,
         [idRecipe]: newIngredients,
       },
     }));
@@ -96,26 +96,26 @@ function FoodProgress({ match }) {
   };
 
   const favoriteRecipe = () => {
-    const newFavoriteFoodRecipes = [
+    const newFavoriteDrinkRecipes = [
       ...favorite,
       {
         id: idRecipe,
-        type: 'food',
-        nationality: details.meals[0].strArea,
-        category: details.meals[0].strCategory,
-        alcoholicOrNot: '',
-        name: details.meals[0].strMeal,
-        image: details.meals[0].strMealThumb,
+        type: 'drink',
+        nationality: '',
+        category: details.drinks[0].strCategory,
+        alcoholicOrNot: details.drinks[0].strAlcoholic,
+        name: details.drinks[0].strDrink,
+        image: details.drinks[0].strDrinkThumb,
       },
     ];
-    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteFoodRecipes));
-    setFavorite(newFavoriteFoodRecipes);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteDrinkRecipes));
+    setFavorite(newFavoriteDrinkRecipes);
   };
 
   const unfavoriteRecipe = () => {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const newFavorites = favoriteRecipes.filter((element) => (
-      element.id !== details.meals[0].idMeal
+      element.id !== details.drinks[0].idDrink
     ));
     setFavorite(newFavorites);
     localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
@@ -125,22 +125,22 @@ function FoodProgress({ match }) {
 
   return (
     <div>
-      {(details.meals && arrayIngredients.filterIngredients
-      && checked && checked.length > 0) && (
+      {details.drinks && arrayIngredients.filterIngredients
+      && checked && checked.length > 0 && (
         <div className={ styles.container }>
           <img
-            src={ details.meals[0].strMealThumb }
-            alt={ details.meals[0].strMeal }
+            src={ details.drinks[0].strDrinkThumb }
+            alt={ details.drinks[0].strDrink }
             data-testid="recipe-photo"
           />
 
-          <h1 data-testid="recipe-title">{details.meals[0].strMeal}</h1>
+          <h1 data-testid="recipe-title">{details.drinks[0].strDrink}</h1>
 
           <button
             type="button"
             data-testid="share-btn"
             onClick={ () => {
-              copy(`http://localhost:3000/foods/${details.meals[0].idMeal}`);
+              copy(`http://localhost:3000/drinks/${details.drinks[0].idDrink}`);
               setShowCopyMessage(true);
             } }
           >
@@ -173,9 +173,9 @@ function FoodProgress({ match }) {
             )}
           </div>
 
-          <p data-testid="recipe-category">{details.meals[0].strCategory}</p>
+          <p data-testid="recipe-category">{details.drinks[0].strAlcoholic}</p>
 
-          <ul className={ styles.container_foods }>
+          <ul className={ styles.container_drinks }>
             {arrayIngredients.filterIngredients.map((elem, i) => (
               <label
                 htmlFor={ `${i}-ingredient-step` }
@@ -200,7 +200,7 @@ function FoodProgress({ match }) {
             ))}
           </ul>
 
-          <p data-testid="instructions">{details.meals[0].strInstructions}</p>
+          <p data-testid="instructions">{details.drinks[0].strInstructions}</p>
 
           <button
             type="button"
@@ -219,7 +219,7 @@ function FoodProgress({ match }) {
   );
 }
 
-FoodProgress.propTypes = {
+DrinkProgress.propTypes = {
   match: propTypes.shape({
     params: propTypes.shape({
       idRecipe: propTypes.number,
@@ -227,4 +227,4 @@ FoodProgress.propTypes = {
   }),
 }.isRequired;
 
-export default FoodProgress;
+export default DrinkProgress;
