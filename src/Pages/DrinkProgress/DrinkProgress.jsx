@@ -28,7 +28,8 @@ function DrinkProgress({ match }) {
 
     if (arrayIngredients.filterIngredients) {
       const allIngredients = arrayIngredients.filterIngredients.map((elem, i) => (
-        `${elem[1]} ${arrayIngredients.filterMens[i][1]}`
+        arrayIngredients.filterMens[i]
+          ? `${elem[1]} ${arrayIngredients.filterMens[i][1]}` : `${elem[1]}`
       ));
 
       const numberAllIng = allIngredients.length;
@@ -38,7 +39,6 @@ function DrinkProgress({ match }) {
         const aux = allIngredients.map((elem) => (
           recipesInStorage.cocktails[idRecipe].includes(elem)
         ));
-        console.log(aux);
         return aux;
       }
       return new Array(numberAllIng).fill(false);
@@ -49,7 +49,7 @@ function DrinkProgress({ match }) {
 
   useEffect(() => {
     const requestDetails = async () => {
-      await getApiDetails(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idRecipe}`, 'drinks');
+      await getApiDetails(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idRecipe}`, 'drinks');
     };
     requestDetails();
   }, []);
@@ -59,10 +59,19 @@ function DrinkProgress({ match }) {
     setChecked(aux);
   }, [arrayIngredients]);
 
+  const validIngredients = () => arrayIngredients.filterIngredients.map((elem, i) => (
+    arrayIngredients.filterMens[i] ? `${elem[1]} ${arrayIngredients.filterMens[i][1]}` : (
+      `${elem[1]}`
+    )
+  ));
+
   const handleChange = (index) => {
-    const allIngredients = arrayIngredients.filterIngredients.map((elem, i) => (
-      `${elem[1]} ${arrayIngredients.filterMens[i][1]}`
-    ));
+    console.log(arrayIngredients);
+    const allIngredients = validIngredients();
+    // const allIngredients = arrayIngredients.filterIngredients.map((elem, i) => (
+    //   `${elem[1]} ${arrayIngredients.filterMens[i][1]}`
+    // ));
+    console.log(allIngredients);
     const newChecked = [...checked];
     newChecked[index] = !checked[index];
     setChecked(newChecked);
@@ -79,11 +88,6 @@ function DrinkProgress({ match }) {
     }));
   };
 
-  // ------------------------------- componentDidMount Feature
-
-  // ------------------------------- Progress Feature
-
-  // ------------------------------- Favorite Feature
   const findFavoriteRecipeInStorage = () => {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favoriteRecipes !== null) {
@@ -95,7 +99,7 @@ function DrinkProgress({ match }) {
   const alreadyFavorite = () => {
     const favoriteRecipes = findFavoriteRecipeInStorage();
     return favoriteRecipes.map(({ id }) => id)
-      .includes(details.meals[0].idDrink);
+      .includes(details.drinks[0].idDrink);
   };
 
   const favoriteRecipe = () => {
@@ -128,8 +132,7 @@ function DrinkProgress({ match }) {
 
   return (
     <div>
-      {(details.meals && arrayIngredients.filterIngredients
-      && checked && checked.length > 0) && (
+      {details.drinks && arrayIngredients.filterIngredients && (
         <div className={ styles.container }>
           <img
             src={ details.drinks[0].strDrinkThumb }
@@ -143,7 +146,7 @@ function DrinkProgress({ match }) {
             type="button"
             data-testid="share-btn"
             onClick={ () => {
-              copy(`http://localhost:3000/foods/${details.meals[0].idMeal}`);
+              copy(`http://localhost:3000/drinks/${details.drinks[0].idDrink}`);
               setShowCopyMessage(true);
             } }
           >
@@ -156,10 +159,9 @@ function DrinkProgress({ match }) {
             tabIndex="0"
             onClick={ () => {
               if (alreadyFavorite()) {
-                unfavoriteRecipe();
-              } else {
-                favoriteRecipe();
+                return unfavoriteRecipe();
               }
+              return favoriteRecipe();
             } }
           >
             {alreadyFavorite() ? (
@@ -197,7 +199,7 @@ function DrinkProgress({ match }) {
                 <span>
                   {elem[1]}
                   {' '}
-                  {arrayIngredients.filterMens[i][1]}
+                  {arrayIngredients.filterMens[i] && arrayIngredients.filterMens[i][1]}
                 </span>
               </label>
 

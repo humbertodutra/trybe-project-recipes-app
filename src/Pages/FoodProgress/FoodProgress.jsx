@@ -38,7 +38,6 @@ function FoodProgress({ match }) {
         const aux = allIngredients.map((elem) => (
           recipesInStorage.meals[idRecipe].includes(elem)
         ));
-        console.log(aux);
         return aux;
       }
       return new Array(numberAllIng).fill(false);
@@ -79,11 +78,6 @@ function FoodProgress({ match }) {
     }));
   };
 
-  // ------------------------------- componentDidMount Feature
-
-  // ------------------------------- Progress Feature
-
-  // ------------------------------- Favorite Feature
   const findFavoriteRecipeInStorage = () => {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favoriteRecipes !== null) {
@@ -156,10 +150,9 @@ function FoodProgress({ match }) {
             tabIndex="0"
             onClick={ () => {
               if (alreadyFavorite()) {
-                unfavoriteRecipe();
-              } else {
-                favoriteRecipe();
+                return unfavoriteRecipe();
               }
+              return favoriteRecipe();
             } }
           >
             {alreadyFavorite() ? (
@@ -197,7 +190,7 @@ function FoodProgress({ match }) {
                 <span>
                   {elem[1]}
                   {' '}
-                  {arrayIngredients.filterMens[i][1]}
+                  {arrayIngredients.filterMens[i] && arrayIngredients.filterMens[i][1]}
                 </span>
               </label>
 

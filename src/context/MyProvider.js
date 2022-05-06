@@ -73,6 +73,7 @@ function MyProvider({ children }) {
         elem[1] === '' || elem[1] === null)),
     );
     setArrayIngredients({ filterIngredients, filterMens });
+    console.log(arrayIngredients);
   }, []);
 
   const getCategories = async (type) => {

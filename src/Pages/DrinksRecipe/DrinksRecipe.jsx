@@ -18,6 +18,12 @@ function DrinksRecipe({ match }) {
 
   const [showCopyMessage, setShowCopyMessage] = useState(false);
 
+  const validIngredients = () => arrayIngredients.filterIngredients.map((elem, i) => (
+    arrayIngredients.filterMens[i] ? `${elem[1]} ${arrayIngredients.filterMens[i][1]}` : (
+      `${elem[1]}`
+    )
+  ));
+
   useEffect(() => {
     const requestDetails = async () => {
       await getApiDetails(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idRecipe}`, 'drinks');
@@ -35,8 +41,8 @@ function DrinksRecipe({ match }) {
   };
 
   const alreadyStarted = () => {
-    const { cocktails } = findStartedRecipeInStorage();
-    return Object.keys(cocktails).includes(details.drinks[0].idDrink);
+    const aux = findStartedRecipeInStorage();
+    return Object.keys(aux.cocktails).includes(details.drinks[0].idDrink);
   };
 
   const startRecipe = () => {
@@ -149,13 +155,12 @@ function DrinksRecipe({ match }) {
           <p data-testid="recipe-category">{details.drinks[0].strAlcoholic}</p>
 
           <ul>
-            {arrayIngredients.filterIngredients.map((elem, i) => (
+            {validIngredients().map((elem, i) => (
               <li
                 key={ elem }
                 data-testid={ `${i}-ingredient-name-and-measure` }
               >
-                {elem[1]}
-                {arrayIngredients.filterMens[i][1]}
+                {elem}
               </li>
             ))}
           </ul>
@@ -183,7 +188,7 @@ function DrinksRecipe({ match }) {
             className={ styles.button_start }
             onClick={ () => {
               startRecipe();
-              history.push(`${details.drinks[0].idDrink}/in-progress`);
+              history.push(`/drinks/${details.drinks[0].idDrink}/in-progress`);
             } }
           >
             {

@@ -105,8 +105,7 @@ function FoodsRecipe({ match }) {
 
   return (
     <div>
-      {details.meals && arrayIngredients.filterIngredients && recommend.length > 0
-      && (
+      {details.meals && arrayIngredients.filterIngredients && (
         <div className={ styles.container }>
           <img
             src={ details.meals[0].strMealThumb }
@@ -133,10 +132,9 @@ function FoodsRecipe({ match }) {
             tabIndex="0"
             onClick={ () => {
               if (alreadyFavorite()) {
-                unfavoriteRecipe();
-              } else {
-                favoriteRecipe();
+                return unfavoriteRecipe();
               }
+              return favoriteRecipe();
             } }
           >
             {alreadyFavorite() ? (
@@ -164,7 +162,7 @@ function FoodsRecipe({ match }) {
               >
                 {elem[1]}
                 {' '}
-                {arrayIngredients.filterMens[i][1]}
+                {arrayIngredients.filterMens[i] && arrayIngredients.filterMens[i][1]}
               </li>
             ))}
           </ul>
