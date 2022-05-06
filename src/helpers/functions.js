@@ -1,9 +1,15 @@
-const initState = () => {
+const initState = (arrayIngredients, idRecipe, type) => {
   const recipesInStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
-  if (recipesInStorage === null) {
+  if (type === 'meals') {
+    if (recipesInStorage === null) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        meals: { [idRecipe]: [] }, cocktails: {},
+      }));
+    }
+  } else if (recipesInStorage === null) {
     localStorage.setItem('inProgressRecipes', JSON.stringify({
-      meals: {}, cocktails: { [idRecipe]: [] },
+      cocktails: { [idRecipe]: [] }, meals: {},
     }));
   }
 
@@ -14,11 +20,11 @@ const initState = () => {
     ));
 
     const numberAllIng = allIngredients.length;
-    const recipesId = recipesInStorage.cocktails;
+    const recipesId = recipesInStorage[type];
     const isThere = Object.keys(recipesId).includes(idRecipe);
     if (isThere) {
       const aux = allIngredients.map((elem) => (
-        recipesInStorage.cocktails[idRecipe].includes(elem)
+        recipesInStorage[type][idRecipe].includes(elem)
       ));
       return aux;
     }

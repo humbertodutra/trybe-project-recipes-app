@@ -5,6 +5,7 @@ import MyContext from '../../context/MyContext';
 import styles from './FoodProgress.module.css';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import initState from '../../helpers/functions';
 
 const copy = require('clipboard-copy');
 
@@ -17,34 +18,6 @@ function FoodProgress({ match }) {
 
   const [showCopyMessage, setShowCopyMessage] = useState(false);
 
-  const initState = () => {
-    const recipesInStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-
-    if (recipesInStorage === null) {
-      localStorage.setItem('inProgressRecipes', JSON.stringify({
-        meals: { [idRecipe]: [] }, cocktails: {},
-      }));
-    }
-
-    if (arrayIngredients.filterIngredients) {
-      const allIngredients = arrayIngredients.filterIngredients.map((elem, i) => (
-        arrayIngredients.filterMens[i]
-          ? `${elem[1]} ${arrayIngredients.filterMens[i][1]}` : `${elem[1]}`
-      ));
-
-      const numberAllIng = allIngredients.length;
-      const recipesId = recipesInStorage.meals;
-      const isThere = Object.keys(recipesId).includes(idRecipe);
-      if (isThere) {
-        const aux = allIngredients.map((elem) => (
-          recipesInStorage.meals[idRecipe].includes(elem)
-        ));
-        return aux;
-      }
-      return new Array(numberAllIng).fill(false);
-    }
-  };
-
   const [checked, setChecked] = useState([]);
 
   useEffect(() => {
@@ -55,7 +28,7 @@ function FoodProgress({ match }) {
   }, []);
 
   useEffect(() => {
-    const aux = initState();
+    const aux = initState(arrayIngredients, idRecipe, 'meals');
     setChecked(aux);
   }, [arrayIngredients]);
 
