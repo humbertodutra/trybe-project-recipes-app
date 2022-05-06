@@ -5,12 +5,10 @@ function ProfileComponent() {
   const history = useHistory();
   const user = localStorage.getItem('user');
   const userObj = JSON.parse(user);
-  console.log(userObj.email);
   const storage = localStorage;
   return (
     <main>
-
-      <p data-testid="profile-email">{userObj.email}</p>
+      { userObj && <p data-testid="profile-email">{userObj.email}</p> }
       <button
         data-testid="profile-done-btn"
         type="button"
