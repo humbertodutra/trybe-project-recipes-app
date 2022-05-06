@@ -1,20 +1,20 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import renderWithRouter from './renderWithRouter';
-import Login from './Pages/Login/Login';
-import Foods from './Pages/Foods/Foods';
-import ExploreFoodsIngredients from './Pages/Explore/ExploreFoodsIngredients';
-import Explore from './Pages/Explore/Explore';
-import ExploreFoods from './Pages/Explore/ExploreFoods';
-import ExploreDrinks from './Pages/Explore/ExploreDrinks';
-import ExploreFoodsNationalities from './Pages/Explore/ExploreFoodsNacionalities';
-import Profile from './Pages/Profile/Profile';
-import DoneRecipes from './Pages/Done_Recipes/DoneRecipes';
-import FavoriteRecipes from './Pages/Favorite_Recipes/FavoriteRecipes';
-import Drinks from './Pages/Drinks/Drinks';
-import Footer from './Components/Footer/Footer';
-import ExploreDrinksIngredients from './Pages/Explore/ExploreDrinksIngredients';
+import renderWithRouter from '../../renderWithRouter';
+import Login from '../../Pages/Login/Login';
+import Foods from '../../Pages/Foods/Foods';
+import ExploreFoodsIngredients from '../../Pages/Explore/ExploreFoodsIngredients';
+import Explore from '../../Pages/Explore/Explore';
+import ExploreFoods from '../../Pages/Explore/ExploreFoods';
+import ExploreDrinks from '../../Pages/Explore/ExploreDrinks';
+import ExploreFoodsNationalities from '../../Pages/Explore/ExploreFoodsNacionalities';
+import Profile from '../../Pages/Profile/Profile';
+import DoneRecipes from '../../Pages/Done_Recipes/DoneRecipes';
+import FavoriteRecipes from '../../Pages/Favorite_Recipes/FavoriteRecipes';
+import Drinks from '../../Pages/Drinks/Drinks';
+import Footer from './Footer';
+import ExploreDrinksIngredients from '../../Pages/Explore/ExploreDrinksIngredients';
 
 describe('Componente Footer', () => {
   it('contém três links, cada um contendo a imagem correta', () => {

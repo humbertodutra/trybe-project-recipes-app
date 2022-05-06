@@ -1,0 +1,11 @@
+.form {
+  display: flex;
+  flex-direction: row;
+  height: 8vh;
+  padding-top: 2rem;
+}
+
+.button {
+  padding: 0.12rem;
+  width: 20%;
+}

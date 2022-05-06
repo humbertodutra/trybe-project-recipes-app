@@ -21,6 +21,8 @@ function MyProvider({ children }) {
   const [recommend, setRecommend] = useState({});
   const [favorite, setFavorite] = useState([]);
   const [filterFavorite, setfilterFavorite] = useState([]);
+  const [doneRecipes, setdoneRecipes] = useState([]);
+  // const [doneDrinks, setDoneDrinks] = useState([]);
 
   const handleRadio = ({ target }) => {
     setRadio(target.value);
@@ -75,7 +77,6 @@ function MyProvider({ children }) {
         elem[1] === '' || elem[1] === null)),
     );
     setArrayIngredients({ filterIngredients, filterMens });
-    console.log(arrayIngredients);
   }, []);
 
   const getCategories = async (type) => {
@@ -202,6 +203,8 @@ function MyProvider({ children }) {
     unfavoriteRecipe,
     filter,
     filterFavorite,
+    doneRecipes,
+    setdoneRecipes,
   };
   return (
     <MyContext.Provider value={ context }>
