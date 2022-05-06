@@ -17,7 +17,6 @@ function MyProvider({ children }) {
   const [details, setDetails] = useState({});
   const [arrayIngredients, setArrayIngredients] = useState({});
   const [recommend, setRecommend] = useState({});
-  const [startedRecepies, setStartedRecepies] = useState({ meals: {}, cocktails: {} });
   const [favorite, setFavorite] = useState([]);
 
   const handleRadio = ({ target }) => {
@@ -170,8 +169,6 @@ function MyProvider({ children }) {
     recommend,
     originalRecipes,
     setOriginalRecipes,
-    startedRecepies,
-    setStartedRecepies,
     favorite,
     setFavorite,
     setDetails,

@@ -13,7 +13,7 @@ function FoodsRecipe({ match }) {
   const { params: { idRecipe } } = match;
   const {
     getApiDetails, details, arrayIngredients, getApiRecomend,
-    recommend, setStartedRecepies, favorite, setFavorite,
+    recommend, favorite, setFavorite,
   } = useContext(MyContext);
 
   const [showCopyMessage, setShowCopyMessage] = useState(false);
@@ -24,7 +24,7 @@ function FoodsRecipe({ match }) {
     };
     requestDetails();
     getApiRecomend('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=', 'drinks');
-  }, []);
+  }, [getApiDetails, getApiRecomend, idRecipe]);
 
   const youtube = () => {
     if (details.meals) {
@@ -48,17 +48,22 @@ function FoodsRecipe({ match }) {
   };
 
   const startRecipe = () => {
-    const { meals, cocktails } = findStartedRecipeInStorage();
-    const newStartedFoodRecipes = {
-      cocktails,
+    const recipesInStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+    if (recipesInStorage === null) {
+      return localStorage.setItem('inProgressRecipes', JSON.stringify({
+        meals: { [idRecipe]: [] }, cocktails: { },
+      }));
+    }
+
+    const { meals, cocktails } = recipesInStorage;
+    return localStorage.setItem('inProgressRecipes', JSON.stringify({
       meals: {
         ...meals,
-        [details.meals[0].idMeal]: [],
+        [idRecipe]: [],
       },
-    };
-
-    localStorage.setItem('inProgressRecipes', JSON.stringify(newStartedFoodRecipes));
-    setStartedRecepies(newStartedFoodRecipes);
+      cocktails,
+    }));
   };
 
   const findFavoriteRecipeInStorage = () => {
@@ -199,9 +204,7 @@ function FoodsRecipe({ match }) {
              data-testid="start-recipe-btn"
              className={ styles.button_start }
              onClick={ () => {
-               if (!alreadyStarted()) {
-                 startRecipe();
-               }
+               startRecipe();
                history.push(`/foods/${details.meals[0].idMeal}/in-progress`);
              } }
            >

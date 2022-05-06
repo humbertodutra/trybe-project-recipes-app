@@ -46,18 +46,22 @@ function DrinksRecipe({ match }) {
   };
 
   const startRecipe = () => {
-    const { meals, cocktails } = findStartedRecipeInStorage();
-    const newCocktails = alreadyStarted() ? (
-      {
+    const recipesInStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+    if (recipesInStorage === null) {
+      return localStorage.setItem('inProgressRecipes', JSON.stringify({
+        meals: {}, cocktails: { [idRecipe]: [] },
+      }));
+    }
+
+    const { meals, cocktails } = recipesInStorage;
+    return localStorage.setItem('inProgressRecipes', JSON.stringify({
+      cocktails: {
         ...cocktails,
-        [details.drinks[0].idDrink]: [],
-      }
-    ) : ({ [details.drinks[0].idDrink]: [] });
-    const newStartedFoodRecipes = {
+        [idRecipe]: [],
+      },
       meals,
-      cocktails: newCocktails,
-    };
-    localStorage.setItem('inProgressRecipes', JSON.stringify(newStartedFoodRecipes));
+    }));
   };
 
   const findFavoriteRecipeInStorage = () => {
@@ -132,10 +136,9 @@ function DrinksRecipe({ match }) {
             tabIndex="0"
             onClick={ () => {
               if (alreadyFavorite()) {
-                unfavoriteRecipe();
-              } else {
-                favoriteRecipe();
+                return unfavoriteRecipe();
               }
+              return favoriteRecipe();
             } }
           >
             {alreadyFavorite() ? (
@@ -189,9 +192,7 @@ function DrinksRecipe({ match }) {
             data-testid="start-recipe-btn"
             className={ styles.button_start }
             onClick={ () => {
-              if (!alreadyStarted()) {
-                startRecipe();
-              }
+              startRecipe();
               history.push(`/drinks/${details.drinks[0].idDrink}/in-progress`);
             } }
           >
