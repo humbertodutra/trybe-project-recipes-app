@@ -96,7 +96,7 @@ function FoodsRecipe({ match }) {
     localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteFoodRecipes));
     setFavorite(newFavoriteFoodRecipes);
   };
-  
+
   const unfavoriteRecipe = () => {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const newFavorites = favoriteRecipes.filter((element) => (
