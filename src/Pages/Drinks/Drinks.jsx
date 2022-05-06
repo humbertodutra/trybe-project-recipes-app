@@ -8,13 +8,14 @@ import CardCategories from '../../Components/CardCategories/CardCategories';
 
 export default function Drinks(props) {
   const { recipes, categories, getAllRecipes, showSearch,
-    getCategories, searched } = useContext(MyContext);
+    getCategories, searched, recipesByIng } = useContext(MyContext);
   const lengthDrink = 12;
   const lengthCategories = 5;
 
   useEffect(() => {
     getAllRecipes('drinks');
     getCategories('drinks');
+    console.log(recipesByIng);
   }, []);
 
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -28,34 +29,53 @@ export default function Drinks(props) {
         selectedCategory={ selectedCategory }
         setSelectedCategory={ setSelectedCategory }
       />
-      {categories.drinks && categories.drinks.map((elem, index) => (
-        (index < lengthCategories && !showSearch) && (
-          <CardCategories
-            categoryName={ elem.strCategory }
-            key={ elem.strCategory }
-            title="Drinks"
-            selectedCategory={ selectedCategory }
-            setSelectedCategory={ setSelectedCategory }
-          />
-        )
-      ))}
-      {recipes.drinks && recipes.drinks.map((elem, index) => (
-        index < lengthDrink && (
-          <CardRecipes
-            prevPath="drinks"
-            index={ index }
-            strMealOrDrink={ elem.strDrink }
-            strMealOrDrinkThumb={ elem.strDrinkThumb }
-            key={ elem.idDrink }
-            id={ elem.idDrink }
-          />
-        )))}
-      {recipes.drinks
-      && (recipes.drinks.length === 1 && searched) && <Redirect
-        to={ `/drinks/${
-          recipes.drinks[0].idDrink
-        }` }
+
+      {recipesByIng.length === 0 ? (
+        <>
+          {categories.drinks && categories.drinks.map((elem, index) => (
+            (index < lengthCategories && !showSearch) && (
+              <CardCategories
+                categoryName={ elem.strCategory }
+                key={ elem.strCategory }
+                title="Drinks"
+                selectedCategory={ selectedCategory }
+                setSelectedCategory={ setSelectedCategory }
+              />
+            )
+          ))}
+          {recipes.drinks && recipes.drinks.map((elem, index) => (
+            index < lengthDrink && (
+              <CardRecipes
+                prevPath="drinks"
+                index={ index }
+                strMealOrDrink={ elem.strDrink }
+                strMealOrDrinkThumb={ elem.strDrinkThumb }
+                key={ elem.idDrink }
+                id={ elem.idDrink }
+              />
+            )))}
+          {recipes.drinks
+      && (recipes.drinks.length === 1 && searched)
+      && <Redirect
+        to={ `/drinks/${recipes.drinks[0].idDrink}` }
       />}
+        </>
+      ) : (
+        <>
+          {recipesByIng.map((e, index) => (
+            index < lengthDrink && (
+              <CardRecipes
+                prevPath="drinks"
+                index={ index }
+                strMealOrDrink={ e.strDrink }
+                strMealOrDrinkThumb={ e.strDrinkThumb }
+                key={ e.idDrink }
+                id={ e.idDrink }
+              />
+            )))}
+        </>
+      )}
+
       <Footer />
     </div>
   );

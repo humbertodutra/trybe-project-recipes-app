@@ -7,11 +7,10 @@ body {
   flex-direction: column;
 }
 
-.content {
-  flex: 1 0 auto;
-}
-
 .footer {
   bottom: 0;
+  display: flex;
+  justify-content: space-around;
   position: fixed;
+  width: 100%;
 }
