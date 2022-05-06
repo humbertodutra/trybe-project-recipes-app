@@ -54,7 +54,7 @@ function App() {
       />
       <Route
         exact
-        path="/drinks/:iidRecipe/in-progress"
+        path="/drinks/:idRecipe/in-progress"
         component={ DrinkProgress }
       />
       <Route

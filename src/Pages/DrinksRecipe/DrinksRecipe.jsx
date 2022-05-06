@@ -13,7 +13,7 @@ function DrinksRecipe({ match }) {
   const { params: { idRecipe } } = match;
   const {
     getApiDetails, details, arrayIngredients, getApiRecomend,
-    recommend, setStartedRecepies, favorite, setFavorite,
+    recommend, favorite, setFavorite,
   } = useContext(MyContext);
 
   const [showCopyMessage, setShowCopyMessage] = useState(false);
@@ -37,26 +37,27 @@ function DrinksRecipe({ match }) {
     if (recepiesInProgress !== null) {
       return JSON.parse(localStorage.getItem('inProgressRecipes'));
     }
-    return { meals: {}, cocktails: {} };
+    return { cocktails: { [details.drinks[0].idDrinks]: [] }, meals: { } };
   };
 
   const alreadyStarted = () => {
-    const aux = findStartedRecipeInStorage();
-    return Object.keys(aux.cocktails).includes(details.drinks[0].idDrink);
+    const { cocktails } = findStartedRecipeInStorage();
+    return Object.keys(cocktails).includes(details.drinks[0].idDrink);
   };
 
   const startRecipe = () => {
     const { meals, cocktails } = findStartedRecipeInStorage();
-    const newStartedDrinkRecipes = {
-      meals,
-      cocktails: {
+    const newCocktails = alreadyStarted() ? (
+      {
         ...cocktails,
         [details.drinks[0].idDrink]: [],
-      },
+      }
+    ) : ({ [details.drinks[0].idDrink]: [] });
+    const newStartedFoodRecipes = {
+      meals,
+      cocktails: newCocktails,
     };
-
-    localStorage.setItem('inProgressRecipes', JSON.stringify(newStartedDrinkRecipes));
-    setStartedRecepies(newStartedDrinkRecipes);
+    localStorage.setItem('inProgressRecipes', JSON.stringify(newStartedFoodRecipes));
   };
 
   const findFavoriteRecipeInStorage = () => {
@@ -182,12 +183,15 @@ function DrinksRecipe({ match }) {
               </li>
             ))}
           </ul>
+
           <button
             type="button"
             data-testid="start-recipe-btn"
             className={ styles.button_start }
             onClick={ () => {
-              startRecipe();
+              if (!alreadyStarted()) {
+                startRecipe();
+              }
               history.push(`/drinks/${details.drinks[0].idDrink}/in-progress`);
             } }
           >

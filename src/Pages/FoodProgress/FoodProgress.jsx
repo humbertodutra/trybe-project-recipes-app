@@ -22,13 +22,14 @@ function FoodProgress({ match }) {
 
     if (recipesInStorage === null) {
       localStorage.setItem('inProgressRecipes', JSON.stringify({
-        meals: {}, cocktails: {},
+        meals: { [idRecipe]: [] }, cocktails: {},
       }));
     }
 
     if (arrayIngredients.filterIngredients) {
       const allIngredients = arrayIngredients.filterIngredients.map((elem, i) => (
-        `${elem[1]} ${arrayIngredients.filterMens[i][1]}`
+        arrayIngredients.filterMens[i]
+          ? `${elem[1]} ${arrayIngredients.filterMens[i][1]}` : `${elem[1]}`
       ));
 
       const numberAllIng = allIngredients.length;
@@ -60,17 +61,19 @@ function FoodProgress({ match }) {
 
   const handleChange = (index) => {
     const allIngredients = arrayIngredients.filterIngredients.map((elem, i) => (
-      `${elem[1]} ${arrayIngredients.filterMens[i][1]}`
+      arrayIngredients.filterMens[i]
+        ? `${elem[1]} ${arrayIngredients.filterMens[i][1]}` : (
+          `${elem[1]}`
+        )
     ));
     const newChecked = [...checked];
     newChecked[index] = !checked[index];
     setChecked(newChecked);
     const newIngredients = allIngredients.filter((_elem, i) => newChecked[i]);
-
     const recipesInStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const { meals, cocktails } = recipesInStorage;
     localStorage.setItem('inProgressRecipes', JSON.stringify({
-      ...cocktails,
+      cocktails,
       meals: {
         ...meals,
         [idRecipe]: newIngredients,
@@ -89,14 +92,14 @@ function FoodProgress({ match }) {
   const alreadyFavorite = () => {
     const favoriteRecipes = findFavoriteRecipeInStorage();
     return favoriteRecipes.map(({ id }) => id)
-      .includes(details.meals[0].idMeal);
+      .includes(idRecipe);
   };
 
   const favoriteRecipe = () => {
     const newFavoriteFoodRecipes = [
       ...favorite,
       {
-        id: details.meals[0].idMeal,
+        id: idRecipe,
         type: 'food',
         nationality: details.meals[0].strArea,
         category: details.meals[0].strCategory,

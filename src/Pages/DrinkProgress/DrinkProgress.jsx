@@ -22,7 +22,7 @@ function DrinkProgress({ match }) {
 
     if (recipesInStorage === null) {
       localStorage.setItem('inProgressRecipes', JSON.stringify({
-        meals: {}, cocktails: {},
+        meals: {}, cocktails: { [idRecipe]: [] },
       }));
     }
 
@@ -59,28 +59,21 @@ function DrinkProgress({ match }) {
     setChecked(aux);
   }, [arrayIngredients]);
 
-  const validIngredients = () => arrayIngredients.filterIngredients.map((elem, i) => (
-    arrayIngredients.filterMens[i] ? `${elem[1]} ${arrayIngredients.filterMens[i][1]}` : (
-      `${elem[1]}`
-    )
-  ));
-
   const handleChange = (index) => {
-    console.log(arrayIngredients);
-    const allIngredients = validIngredients();
-    // const allIngredients = arrayIngredients.filterIngredients.map((elem, i) => (
-    //   `${elem[1]} ${arrayIngredients.filterMens[i][1]}`
-    // ));
-    console.log(allIngredients);
+    const allIngredients = arrayIngredients.filterIngredients.map((elem, i) => (
+      arrayIngredients.filterMens[i]
+        ? `${elem[1]} ${arrayIngredients.filterMens[i][1]}` : (
+          `${elem[1]}`
+        )
+    ));
     const newChecked = [...checked];
     newChecked[index] = !checked[index];
     setChecked(newChecked);
     const newIngredients = allIngredients.filter((_elem, i) => newChecked[i]);
-
     const recipesInStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const { meals, cocktails } = recipesInStorage;
     localStorage.setItem('inProgressRecipes', JSON.stringify({
-      ...meals,
+      meals,
       cocktails: {
         ...cocktails,
         [idRecipe]: newIngredients,
@@ -99,14 +92,14 @@ function DrinkProgress({ match }) {
   const alreadyFavorite = () => {
     const favoriteRecipes = findFavoriteRecipeInStorage();
     return favoriteRecipes.map(({ id }) => id)
-      .includes(details.drinks[0].idDrink);
+      .includes(idRecipe);
   };
 
   const favoriteRecipe = () => {
     const newFavoriteDrinkRecipes = [
       ...favorite,
       {
-        id: details.drinks[0].idDrink,
+        id: idRecipe,
         type: 'drink',
         nationality: '',
         category: details.drinks[0].strCategory,
@@ -132,7 +125,8 @@ function DrinkProgress({ match }) {
 
   return (
     <div>
-      {details.drinks && arrayIngredients.filterIngredients && (
+      {details.drinks && arrayIngredients.filterIngredients
+      && checked && checked.length > 0 && (
         <div className={ styles.container }>
           <img
             src={ details.drinks[0].strDrinkThumb }

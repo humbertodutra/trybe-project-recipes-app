@@ -24,7 +24,7 @@ function FoodsRecipe({ match }) {
     };
     requestDetails();
     getApiRecomend('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=', 'drinks');
-  }, [getApiDetails, idRecipe, getApiRecomend]);
+  }, []);
 
   const youtube = () => {
     if (details.meals) {
@@ -39,7 +39,7 @@ function FoodsRecipe({ match }) {
     if (recepiesInProgress !== null) {
       return JSON.parse(localStorage.getItem('inProgressRecipes'));
     }
-    return { meals: {}, cocktails: {} };
+    return { meals: { [details.meals[0].idMeal]: [] }, cocktails: { } };
   };
 
   const alreadyStarted = () => {
@@ -105,111 +105,112 @@ function FoodsRecipe({ match }) {
 
   return (
     <div>
-      {details.meals && arrayIngredients.filterIngredients && (
-        <div className={ styles.container }>
-          <img
-            src={ details.meals[0].strMealThumb }
-            alt={ details.meals[0].strMeal }
-            data-testid="recipe-photo"
-          />
+      {details.meals && arrayIngredients.filterIngredients && recommend.length > 0
+       && (
+         <div className={ styles.container }>
+           <img
+             src={ details.meals[0].strMealThumb }
+             alt={ details.meals[0].strMeal }
+             data-testid="recipe-photo"
+           />
 
-          <h1 data-testid="recipe-title">{details.meals[0].strMeal}</h1>
+           <h1 data-testid="recipe-title">{details.meals[0].strMeal}</h1>
 
-          <button
-            type="button"
-            data-testid="share-btn"
-            onClick={ () => {
-              copy(`http://localhost:3000${history.location.pathname}`);
-              setShowCopyMessage(true);
-            } }
-          >
-            {showCopyMessage ? 'Link copied!' : 'Share'}
-          </button>
+           <button
+             type="button"
+             data-testid="share-btn"
+             onClick={ () => {
+               copy(`http://localhost:3000${history.location.pathname}`);
+               setShowCopyMessage(true);
+             } }
+           >
+             {showCopyMessage ? 'Link copied!' : 'Share'}
+           </button>
 
-          <div
-            role="button"
-            onKeyPress={ () => { } }
-            tabIndex="0"
-            onClick={ () => {
-              if (alreadyFavorite()) {
-                return unfavoriteRecipe();
-              }
-              return favoriteRecipe();
-            } }
-          >
-            {alreadyFavorite() ? (
-              <img
-                data-testid="favorite-btn"
-                alt="Black heart"
-                src={ blackHeartIcon }
-              />
-            ) : (
-              <img
-                data-testid="favorite-btn"
-                alt="White heart"
-                src={ whiteHeartIcon }
-              />
-            )}
-          </div>
+           <div
+             role="button"
+             onKeyPress={ () => { } }
+             tabIndex="0"
+             onClick={ () => {
+               if (alreadyFavorite()) {
+                 return unfavoriteRecipe();
+               }
+               return favoriteRecipe();
+             } }
+           >
+             {alreadyFavorite() ? (
+               <img
+                 data-testid="favorite-btn"
+                 alt="Black heart"
+                 src={ blackHeartIcon }
+               />
+             ) : (
+               <img
+                 data-testid="favorite-btn"
+                 alt="White heart"
+                 src={ whiteHeartIcon }
+               />
+             )}
+           </div>
 
-          <p data-testid="recipe-category">{details.meals[0].strCategory}</p>
+           <p data-testid="recipe-category">{details.meals[0].strCategory}</p>
 
-          <ul className={ styles.container_foods }>
-            {arrayIngredients.filterIngredients.map((elem, i) => (
-              <li
-                key={ elem }
-                data-testid={ `${i}-ingredient-name-and-measure` }
-              >
-                {elem[1]}
-                {' '}
-                {arrayIngredients.filterMens[i] && arrayIngredients.filterMens[i][1]}
-              </li>
-            ))}
-          </ul>
+           <ul className={ styles.container_foods }>
+             {arrayIngredients.filterIngredients.map((elem, i) => (
+               <li
+                 key={ elem }
+                 data-testid={ `${i}-ingredient-name-and-measure` }
+               >
+                 {elem[1]}
+                 {' '}
+                 {arrayIngredients.filterMens[i] && arrayIngredients.filterMens[i][1]}
+               </li>
+             ))}
+           </ul>
 
-          <p data-testid="instructions">{details.meals[0].strInstructions}</p>
+           <p data-testid="instructions">{details.meals[0].strInstructions}</p>
 
-          <iframe
-            src={ `https://www.youtube.com/embed/${youtube()}` }
-            title={ details.meals.strMeal }
-            width="425"
-            height="350"
-            data-testid="video"
-          />
+           <iframe
+             src={ `https://www.youtube.com/embed/${youtube()}` }
+             title={ details.meals.strMeal }
+             width="425"
+             height="350"
+             data-testid="video"
+           />
 
-          <h3>Recommendation Recipes</h3>
+           <h3>Recommendation Recipes</h3>
 
-          <ul className={ styles.container_carrousel }>
-            {recommend.map((elem, index) => (
-              <li key={ elem.idDrink } data-testid={ `${index}-recomendation-card` }>
-                <CardRecommend
-                  index={ index }
-                  strMealOrDrink={ elem.strDrink }
-                  strMealOrDrinkThumb={ elem.strDrinkThumb }
-                  id={ elem.idDrink }
-                  prevPath="drinks"
-                />
-              </li>
-            ))}
-          </ul>
+           <ul className={ styles.container_carrousel }>
+             {recommend.map((elem, index) => (
+               <li key={ elem.idDrink } data-testid={ `${index}-recomendation-card` }>
+                 <CardRecommend
+                   index={ index }
+                   strMealOrDrink={ elem.strDrink }
+                   strMealOrDrinkThumb={ elem.strDrinkThumb }
+                   id={ elem.idDrink }
+                   prevPath="drinks"
+                 />
+               </li>
+             ))}
+           </ul>
 
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            className={ styles.button_start }
-            onClick={ () => {
-              if (!alreadyStarted()) {
-                startRecipe();
-              }
-              history.push(`/foods/${details.meals[0].idMeal}/in-progress`);
-            } }
-          >
-            {
-              alreadyStarted() ? (
-                'Continue Recipe') : ('Start Recipe')
-            }
-          </button>
-        </div>)}
+           <button
+             type="button"
+             data-testid="start-recipe-btn"
+             className={ styles.button_start }
+             onClick={ () => {
+               if (!alreadyStarted()) {
+                 startRecipe();
+               }
+               history.push(`/foods/${details.meals[0].idMeal}/in-progress`);
+             } }
+           >
+             {
+               alreadyStarted() ? (
+                 'Continue Recipe') : ('Start Recipe')
+             }
+           </button>
+         </div>)}
     </div>
   );
 }
