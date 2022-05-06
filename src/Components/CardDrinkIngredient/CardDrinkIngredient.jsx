@@ -18,7 +18,7 @@ export default function CardDrinkIngredient({ strIngredient, idIngredient, histo
       >
         <img
           src={ `https://www.thecocktaildb.com/images/ingredients/${strIngredient}-Small.png` }
-          alt=""
+          alt={ `${strIngredient}` }
           data-testid={ `${idIngredient}-card-img` }
         />
         <h2 data-testid={ `${idIngredient}-card-name` }>{strIngredient}</h2>
