@@ -7,7 +7,6 @@ export default function ExploreFoodsNationalities(props) {
   return (
     <div>
       <Header { ...props } title="Explore Nationalities" />
-      <p> oiiii </p>
       <NationalitesComponent />
       <Footer />
     </div>
