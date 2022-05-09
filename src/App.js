@@ -18,6 +18,7 @@ import FoodsRecipe from './Pages/FoodsRecipe/FoodsRecipe';
 import DrinksRecipe from './Pages/DrinksRecipe/DrinksRecipe';
 import FoodProgress from './Pages/FoodProgress/FoodProgress';
 import DrinkProgress from './Pages/DrinkProgress/DrinkProgress';
+import DrinksNationalites from './Pages/Drinks-Nationalites/Drinks_Nationalites';
 
 function App() {
   return (
@@ -97,6 +98,12 @@ function App() {
         path="/done-recipes"
         component={ DoneRecipes }
       />
+      <Route
+        exact
+        path="/explore/drinks/nationalities"
+        component={ DrinksNationalites }
+      />
+
       <Route
         exact
         path="/favorite-recipes"
