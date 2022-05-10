@@ -27,6 +27,8 @@
     "react-logger": "^1.1.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "5.0.0",
+    "uniqid": "^5.4.0",
+    "uuidv4": "^6.2.13",
     "websocket-extensions": ">=0.1.4"
   },
   "scripts": {

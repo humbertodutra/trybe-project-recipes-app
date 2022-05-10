@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import uniqid from 'uniqid';
 import CardRecipe from '../../Components/DoneRecipes/CardRecipe';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer/Footer';
@@ -6,15 +7,14 @@ import styles from './done-recipes.module.css';
 import MyContext from '../../context/MyContext';
 
 export default function DoneRecipes(props) {
-  const { doneRecipes } = useContext(MyContext);
-  // const doneRecipesToMap = (recipe) => setdoneRecipes(recipe);
-  // useEffect(() => {
-  //   const doneRecipesLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
-  //   if (doneRecipesLocalStorage && doneRecipesLocalStorage.length !== 0) {
-  //     doneRecipesToMap(doneRecipesLocalStorage);
-  //   }
-  // }, []);
-  console.log(doneRecipes);
+  const { doneRecipes, setdoneRecipes } = useContext(MyContext);
+  const doneRecipesToMap = (recipe) => setdoneRecipes(recipe);
+  useEffect(() => {
+    const doneRecipesLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (doneRecipesLocalStorage && doneRecipesLocalStorage.length !== 0) {
+      doneRecipesToMap(doneRecipesLocalStorage);
+    }
+  }, []);
   return (
     <>
       <Header { ...props } title="Done Recipes" dontShowSearchIcon />
@@ -43,13 +43,23 @@ export default function DoneRecipes(props) {
       </form>
       {
         doneRecipes
-        && doneRecipes.map(({ idMeal, strMealThumb, strMeal }, index) => (
+        && doneRecipes.map((
+          {
+            image, name, doneDate, tags, type, alcoholicOrNot, nationality, category },
+          index,
+        ) => (
           <CardRecipe
             { ...props }
-            key={ `${idMeal} ${strMeal}` }
+            key={ uniqid() }
             index={ index }
-            image={ strMealThumb }
-            nameRecipe={ strMeal }
+            image={ image }
+            name={ name }
+            doneDate={ doneDate }
+            tagName={ tags }
+            type={ type }
+            alcoholicOrNot={ alcoholicOrNot }
+            nationality={ nationality }
+            category={ category }
           />
         ))
       }
