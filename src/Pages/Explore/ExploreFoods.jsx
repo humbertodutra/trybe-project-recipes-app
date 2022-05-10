@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import propTypes from 'prop-types';
-import Header from '../../Components/Header';
+import Header from '../../Components/Header/Header';
 import Footer from '../../Components/Footer/Footer';
 import MyContext from '../../context/MyContext';
 

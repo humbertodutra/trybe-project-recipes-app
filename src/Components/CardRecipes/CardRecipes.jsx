@@ -6,6 +6,7 @@ import styles from './CardRecipes.module.css';
 function CardRecipes({ index, strMealOrDrink, strMealOrDrinkThumb, id, prevPath }) {
   return (
     <Link
+      className={ styles.card_recipe }
       data-testid={ `${index}-recipe-card` }
       to={ `/${prevPath}/${id}` }
     >

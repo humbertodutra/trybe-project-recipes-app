@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import CardFavorite from '../../Components/CardFavorite/CardFavorite';
-import Header from '../../Components/Header';
+import Header from '../../Components/Header/Header';
 import MyContext from '../../context/MyContext';
 
 export default function FavoriteRecipes(props) {

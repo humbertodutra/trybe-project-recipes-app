@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import uniqid from 'uniqid';
 import CardRecipe from '../../Components/CardRecipe/CardRecipe';
-import Header from '../../Components/Header';
+import Header from '../../Components/Header/Header';
 import styles from './done-recipes.module.css';
 import MyContext from '../../context/MyContext';
 

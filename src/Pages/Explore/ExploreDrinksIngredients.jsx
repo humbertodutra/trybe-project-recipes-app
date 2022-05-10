@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import CardDrinkIngredient
 from '../../Components/CardDrinkIngredient/CardDrinkIngredient';
 import Footer from '../../Components/Footer/Footer';
-import Header from '../../Components/Header';
+import Header from '../../Components/Header/Header';
 import MyContext from '../../context/MyContext';
 
 export default function ExploreDrinksIngredients(props) {

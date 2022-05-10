@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import propTypes from 'prop-types';
 import MyContext from '../../context/MyContext';
+import styles from './CardCategories.module.css';
 
 function CardCategories(props) {
   const { categoryName, title, selectedCategory, setSelectedCategory } = props;
@@ -15,6 +16,7 @@ function CardCategories(props) {
   return (
     <button
       data-testid={ `${categoryName}-category-filter` }
+      className={ styles[selectedCategory === categoryName ? 'selected' : 'unselected'] }
       type="button"
       onClick={ () => {
         if (categoryName === selectedCategory || categoryName === 'All') {
