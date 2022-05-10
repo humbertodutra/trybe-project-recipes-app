@@ -2,13 +2,12 @@ import React, { useContext, useEffect } from 'react';
 import uniqid from 'uniqid';
 import CardRecipe from '../../Components/CardRecipe/CardRecipe';
 import Header from '../../Components/Header';
-import Footer from '../../Components/Footer/Footer';
 import styles from './done-recipes.module.css';
 import MyContext from '../../context/MyContext';
 
 export default function DoneRecipes(props) {
   const { doneRecipes, setdoneRecipes } = useContext(MyContext);
-  console.log(doneRecipes);
+
   const doneRecipesToMap = (recipe) => setdoneRecipes(recipe);
   useEffect(() => {
     const doneRecipesLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -62,8 +61,9 @@ export default function DoneRecipes(props) {
           Drinks
         </button>
       </form>
-      {
-        doneRecipes
+      <main className={ styles.mainContent }>
+        {
+          doneRecipes
         && doneRecipes.map((
           { id,
             image, name, doneDate, tags, type, alcoholicOrNot, nationality, category },
@@ -84,8 +84,8 @@ export default function DoneRecipes(props) {
             id={ id }
           />
         ))
-      }
-      <Footer />
+        }
+      </main>
     </>
   );
 }

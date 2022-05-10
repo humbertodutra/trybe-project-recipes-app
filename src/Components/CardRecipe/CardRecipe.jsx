@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import uniqid from 'uniqid';
 import shareIcon from '../../images/shareIcon.svg';
+import styles from './card-recipe.module.css';
 
 const copy = require('clipboard-copy');
 
@@ -11,8 +12,9 @@ export default function CardRecipe({
 }) {
   const [linkIsCopied, setLinkIsCopied] = useState(false);
   return (
-    <section>
+    <section className={ styles.section }>
       <button
+        className={ styles.buttonCard }
         type="button"
         onClick={ () => history.push(`/${type}s/${id}`) }
         onKeyDown={ () => history.push(`/${type}s/${id}`) }
@@ -23,48 +25,48 @@ export default function CardRecipe({
           alt="Imagem da receita"
           data-testid={ `${index}-horizontal-image` }
         />
-      </button>
-      {type === 'food' ? (
-        <span data-testid={ `${index}-horizontal-top-text` }>
-          {`${nationality} - ${category}`}
-        </span>
-      ) : (
-        <span data-testid={ `${index}-horizontal-top-text` }>{alcoholicOrNot}</span>
-      )}
-      <button
-        type="button"
-        onClick={ () => {
-          copy(`http://localhost:3000/foods/${id}`);
-          setLinkIsCopied(true);
-        } }
-      >
-        {linkIsCopied ? (
-          <p>Link copied!</p>
+        {type === 'food' ? (
+          <span data-testid={ `${index}-horizontal-top-text` }>
+            {`${nationality} - ${category}`}
+          </span>
         ) : (
-          <img
-            src={ shareIcon }
-            alt="Ícone de compartilhamento"
-            data-testid={ `${index}-horizontal-share-btn` }
-          />
+          <span data-testid={ `${index}-horizontal-top-text` }>{alcoholicOrNot}</span>
         )}
-      </button>
-      <button
-        type="button"
-        data-testid={ `${index}-horizontal-name` }
-        onClick={ () => history.push(`/${type}s/${id}`) }
-      >
-        {name}
-      </button>
-      <p data-testid={ `${index}-horizontal-done-date` }>{`Done in: ${doneDate}`}</p>
-      {tagName && tagName.map((tag) => (
         <button
-          key={ uniqid() }
           type="button"
-          data-testid={ `${index}-${tag}-horizontal-tag` }
+          onClick={ () => {
+            copy(`http://localhost:3000/foods/${id}`);
+            setLinkIsCopied(true);
+          } }
         >
-          {tag}
+          {linkIsCopied ? (
+            <p>Link copied!</p>
+          ) : (
+            <img
+              src={ shareIcon }
+              alt="Ícone de compartilhamento"
+              data-testid={ `${index}-horizontal-share-btn` }
+            />
+          )}
         </button>
-      ))}
+        <button
+          type="button"
+          data-testid={ `${index}-horizontal-name` }
+          onClick={ () => history.push(`/${type}s/${id}`) }
+        >
+          {name}
+        </button>
+        <p data-testid={ `${index}-horizontal-done-date` }>{`Done in: ${doneDate}`}</p>
+        {tagName && tagName.map((tag) => (
+          <button
+            key={ uniqid() }
+            type="button"
+            data-testid={ `${index}-${tag}-horizontal-tag` }
+          >
+            {tag}
+          </button>
+        ))}
+      </button>
     </section>
   );
 }
