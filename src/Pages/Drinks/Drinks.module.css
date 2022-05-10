@@ -1,0 +1,23 @@
+main {
+  background-color: var(--light-grey);
+  font-size: 2rem;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: var(--light-grey);
+}
+
+.categories_container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.recipes_container {
+  background-color: var(--main-color);
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  margin-top: 2rem;
+}

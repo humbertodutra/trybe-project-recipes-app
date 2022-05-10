@@ -11,11 +11,17 @@ body {
   flex: 1 0 auto;
 }
 
+.footer_container {
+  padding-top: 10rem;
+}
+
 .footer {
-  background-color: antiquewhite;
+  background-color: var(--light-grey);
   bottom: 0;
+  color: var(--main-color);
   display: flex;
   justify-content: space-evenly;
+  padding: 1rem;
   position: fixed;
   text-align: center;
   width: 100%;

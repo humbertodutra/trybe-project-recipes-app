@@ -1,7 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import Footer from '../../Components/Footer/Footer';
-import Header from '../../Components/Header';
+import Header from '../../Components/Header/Header';
 
 export default function Explore(props) {
   return (

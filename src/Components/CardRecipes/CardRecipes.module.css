@@ -1,3 +1,14 @@
 .recipeCard {
-  width: 10rem;
+  width: 13rem;
+}
+
+.card_recipe {
+  border-radius: 1rem;
+  box-shadow: 2px 2px 5px var(--dark-blue);
+  box-sizing: border-box;
+  color: var(--dark-blue);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  text-decoration: inherit;
+  width: 15rem;
 }

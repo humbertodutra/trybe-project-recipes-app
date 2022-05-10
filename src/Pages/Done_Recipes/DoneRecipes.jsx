@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import CardRecipe from '../../Components/DoneRecipes/CardRecipe';
-import Header from '../../Components/Header';
+import Header from '../../Components/Header/Header';
 import Footer from '../../Components/Footer/Footer';
 import styles from './done-recipes.module.css';
 import MyContext from '../../context/MyContext';

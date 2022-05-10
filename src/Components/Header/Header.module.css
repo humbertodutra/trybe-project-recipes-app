@@ -1,0 +1,18 @@
+.container_profile {
+  background-color: var(--light-grey);
+  color: var(--secondary-color);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 2rem;
+}
+
+.button_icon {
+  background: none;
+  border: none;
+  color: var(--secondary-color);
+  cursor: pointer;
+  font: inherit;
+  outline: inherit;
+  padding: 0;
+}
