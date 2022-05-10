@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import uniqid from 'uniqid';
@@ -14,13 +12,18 @@ export default function CardRecipe({
   const [linkIsCopied, setLinkIsCopied] = useState(false);
   return (
     <section>
-      <img
-        src={ image }
-        width="50%"
-        alt="Imagem da receita"
-        data-testid={ `${index}-horizontal-image` }
+      <button
+        type="button"
         onClick={ () => history.push(`/${type}s/${id}`) }
-      />
+        onKeyDown={ () => history.push(`/${type}s/${id}`) }
+      >
+        <img
+          src={ image }
+          width="50%"
+          alt="Imagem da receita"
+          data-testid={ `${index}-horizontal-image` }
+        />
+      </button>
       {type === 'food' ? (
         <span data-testid={ `${index}-horizontal-top-text` }>
           {`${nationality} - ${category}`}
@@ -45,12 +48,13 @@ export default function CardRecipe({
           />
         )}
       </button>
-      <h2
+      <button
+        type="button"
         data-testid={ `${index}-horizontal-name` }
         onClick={ () => history.push(`/${type}s/${id}`) }
       >
         {name}
-      </h2>
+      </button>
       <p data-testid={ `${index}-horizontal-done-date` }>{`Done in: ${doneDate}`}</p>
       {tagName && tagName.map((tag) => (
         <button
