@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import uniqid from 'uniqid';
-import CardRecipe from '../../Components/DoneRecipes/CardRecipe';
+import CardRecipe from '../../Components/CardRecipe/CardRecipe';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer/Footer';
 import styles from './done-recipes.module.css';
