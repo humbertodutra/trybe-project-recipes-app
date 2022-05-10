@@ -13,7 +13,7 @@ function FoodProgress({ match }) {
   const { params: { idRecipe } } = match;
   const {
     getApiDetails, details, arrayIngredients,
-    favorite, setFavorite, setdoneRecipes, doneRecipes,
+    favorite, setFavorite, doneRecipes,
   } = useContext(MyContext);
 
   const [showCopyMessage, setShowCopyMessage] = useState(false);
@@ -25,18 +25,12 @@ function FoodProgress({ match }) {
       await getApiDetails(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idRecipe}`, 'meals');
     };
     requestDetails();
-    console.log(details);
   }, []);
 
   useEffect(() => {
     const aux = initState(arrayIngredients, idRecipe, 'meals');
     setChecked(aux);
   }, [arrayIngredients]);
-
-  // useEffect(() => {
-  //   localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-  //   console.log(doneRecipes);
-  // }, [doneRecipes]);
 
   const handleChange = (index) => {
     const allIngredients = arrayIngredients.filterIngredients.map((elem, i) => (
@@ -98,6 +92,26 @@ function FoodProgress({ match }) {
     ));
     setFavorite(newFavorites);
     localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+  };
+
+  const saveRecipe = () => {
+    const { meals } = details;
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed);
+    const recipeToLocalStorage = {
+      id: meals[0].idMeal,
+      type: 'food',
+      nationality: meals[0].strArea,
+      category: meals[0].strCategory,
+      alcoholicOrNot: '',
+      name: meals[0].strMeal,
+      image: meals[0].strMealThumb,
+      doneDate: today.toLocaleDateString(),
+      tags: meals[0].strTags.split(' '),
+    };
+    console.log(recipeToLocalStorage);
+    const arrRecipes = [...doneRecipes, recipeToLocalStorage];
+    localStorage.setItem('doneRecipes', JSON.stringify(arrRecipes));
   };
 
   const history = useHistory();
@@ -185,9 +199,8 @@ function FoodProgress({ match }) {
             type="button"
             data-testid="finish-recipe-btn"
             onClick={ (e) => {
-              const { meals } = details;
               e.preventDefault();
-              setdoneRecipes([...doneRecipes, meals[0]]);
+              saveRecipe();
               history.push('/done-recipes');
             } }
             disabled={ checked.some((elem) => !elem) }

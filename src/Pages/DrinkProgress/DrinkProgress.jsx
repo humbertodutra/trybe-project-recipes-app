@@ -13,7 +13,7 @@ function DrinkProgress({ match }) {
   const { params: { idRecipe } } = match;
   const {
     getApiDetails, details, arrayIngredients,
-    favorite, setFavorite,
+    favorite, setFavorite, doneRecipes,
   } = useContext(MyContext);
 
   const [showCopyMessage, setShowCopyMessage] = useState(false);
@@ -96,6 +96,25 @@ function DrinkProgress({ match }) {
 
   const history = useHistory();
 
+  const saveRecipe = () => {
+    const { drinks } = details;
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed);
+    const recipeToLocalStorage = {
+      id: drinks[0].idDrink,
+      type: 'drink',
+      nationality: '',
+      category: drinks[0].strCategory,
+      alcoholicOrNot: drinks[0].strAlcoholic,
+      name: drinks[0].strDrink,
+      image: drinks[0].strDrinkThumb,
+      doneDate: today.toLocaleDateString(),
+      tags: drinks[0].strTags ? drinks[0].strTags.split(' ') : [],
+    };
+    console.log(recipeToLocalStorage);
+    const arrRecipes = [...doneRecipes, recipeToLocalStorage];
+    localStorage.setItem('doneRecipes', JSON.stringify(arrRecipes));
+  };
   return (
     <div>
       {details.drinks && arrayIngredients.filterIngredients
@@ -180,6 +199,7 @@ function DrinkProgress({ match }) {
             data-testid="finish-recipe-btn"
             onClick={ (e) => {
               e.preventDefault();
+              saveRecipe();
               history.push('/done-recipes');
             } }
             disabled={ checked.some((elem) => !elem) }

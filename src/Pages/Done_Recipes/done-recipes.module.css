@@ -6,6 +6,17 @@
 }
 
 .button {
+  background-color: var(--accent-color);
+  border: none;
+  border-radius: 0.6rem;
+  color: var(--light-grey);
   padding: 0.12rem;
   width: 20%;
+}
+
+.mainContent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding-top: 2rem;
 }
