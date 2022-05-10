@@ -44,7 +44,7 @@ export default function DoneRecipes(props) {
       {
         doneRecipes
         && doneRecipes.map((
-          {
+          { id,
             image, name, doneDate, tags, type, alcoholicOrNot, nationality, category },
           index,
         ) => (
@@ -60,6 +60,7 @@ export default function DoneRecipes(props) {
             alcoholicOrNot={ alcoholicOrNot }
             nationality={ nationality }
             category={ category }
+            id={ id }
           />
         ))
       }

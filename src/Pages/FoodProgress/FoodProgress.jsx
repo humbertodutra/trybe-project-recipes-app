@@ -100,7 +100,7 @@ function FoodProgress({ match }) {
     const today = new Date(timeElapsed);
     const recipeToLocalStorage = {
       id: meals[0].idMeal,
-      type: 'comida',
+      type: 'food',
       nationality: meals[0].strArea,
       category: meals[0].strCategory,
       alcoholicOrNot: '',
