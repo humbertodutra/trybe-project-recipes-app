@@ -22,7 +22,6 @@ function MyProvider({ children }) {
   const [favorite, setFavorite] = useState([]);
   const [filterFavorite, setfilterFavorite] = useState([]);
   const [doneRecipes, setdoneRecipes] = useState([]);
-  // const [doneDrinks, setDoneDrinks] = useState([]);
 
   const handleRadio = ({ target }) => {
     setRadio(target.value);

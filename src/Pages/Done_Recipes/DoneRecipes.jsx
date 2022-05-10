@@ -8,6 +8,7 @@ import MyContext from '../../context/MyContext';
 
 export default function DoneRecipes(props) {
   const { doneRecipes, setdoneRecipes } = useContext(MyContext);
+  console.log(doneRecipes);
   const doneRecipesToMap = (recipe) => setdoneRecipes(recipe);
   useEffect(() => {
     const doneRecipesLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -15,6 +16,19 @@ export default function DoneRecipes(props) {
       doneRecipesToMap(doneRecipesLocalStorage);
     }
   }, []);
+  const filterRecipes = (recipeType) => {
+    const doneRecipesLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (recipeType === 'food') {
+      const foodsFiltered = doneRecipesLocalStorage.filter(({ type }) => type === 'food');
+      setdoneRecipes(foodsFiltered);
+    } else {
+      const drinksFiltered = doneRecipesLocalStorage.filter(
+        ({ type }) => type === 'drink',
+      );
+      setdoneRecipes(drinksFiltered);
+    }
+  };
+
   return (
     <>
       <Header { ...props } title="Done Recipes" dontShowSearchIcon />
@@ -23,6 +37,11 @@ export default function DoneRecipes(props) {
           type="button"
           data-testid="filter-by-all-btn"
           className={ styles.button }
+          onClick={ () => {
+            const doneRecipesLocalStorage = JSON
+              .parse(localStorage.getItem('doneRecipes'));
+            setdoneRecipes(doneRecipesLocalStorage);
+          } }
         >
           All
         </button>
@@ -30,6 +49,7 @@ export default function DoneRecipes(props) {
           type="button"
           data-testid="filter-by-food-btn"
           className={ styles.button }
+          onClick={ () => filterRecipes('food') }
         >
           Food
         </button>
@@ -37,6 +57,7 @@ export default function DoneRecipes(props) {
           type="button"
           data-testid="filter-by-drink-btn"
           className={ styles.button }
+          onClick={ () => filterRecipes('drink') }
         >
           Drinks
         </button>
