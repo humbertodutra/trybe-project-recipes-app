@@ -18,6 +18,6 @@ describe('Testes da tela Explore Drinks Ingredients', () => {
     userEvent.click(btnIngredient);
     const { pathname } = history.location;
     expect(pathname).toBe('/');
-    // não está indo pra rota "/foods"
+    // não está indo pra rota "/drinks
   });
 });
