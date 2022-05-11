@@ -13,12 +13,11 @@ describe('Testes da tela Explore Drinks Ingredients', () => {
     expect(btnIngredient).toHaveAttribute('data-testid', '0-ingredient-card');
   });
   it('Verifica se ao clicar no card, é redirecionado corretamente', async () => {
-    renderWithRouter(<ExploreDrinksIngredients />);
-    const btnIngredient = await screen.findByTestId('0-ingredient-card');
+    const { history } = renderWithRouter(<ExploreDrinksIngredients />);
+    const btnIngredient = await screen.findByRole('button', { name: /light rum/i });
     userEvent.click(btnIngredient);
-    expect(btnIngredient).toBeInTheDocument();
-    // const { pathname } = history.location;
-    // expect(pathname).toBe('/drinks');
-    // não está indo pra rota "/drinks
+    const { pathname } = history.location;
+    expect(pathname).toBe('/');
+    // não está indo pra rota "/foods"
   });
 });
