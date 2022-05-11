@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import MyContext from '../../context/MyContext';
 import CardRecipes from '../CardRecipes/CardRecipes';
+import styles from './nationalities-component.module.css';
 
 export default function NationalitesComponent() {
   const { getAllRecipes, recipes, setRecipes,
@@ -38,6 +39,7 @@ export default function NationalitesComponent() {
     <main>
       <div>
         <select
+          className={ styles.select }
           data-testid="explore-by-nationality-dropdown"
           name="nationalities"
           id="nationalities"
@@ -61,18 +63,19 @@ export default function NationalitesComponent() {
           ))}
 
         </select>
+        <div className={ styles.card_recipes }>
+          {recipes.meals.slice(0, onze).map((elem, index) => (
 
-        {recipes.meals.slice(0, onze).map((elem, index) => (
-
-          <CardRecipes
-            prevPath="foods"
-            index={ index }
-            strMealOrDrink={ elem.strMeal }
-            strMealOrDrinkThumb={ elem.strMealThumb }
-            key={ elem.idMeal }
-            id={ elem.idMeal }
-          />
-        ))}
+            <CardRecipes
+              prevPath="foods"
+              index={ index }
+              strMealOrDrink={ elem.strMeal }
+              strMealOrDrinkThumb={ elem.strMealThumb }
+              key={ elem.idMeal }
+              id={ elem.idMeal }
+            />
+          ))}
+        </div>
       </div>
     </main>
   );
