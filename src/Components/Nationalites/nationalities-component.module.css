@@ -1,8 +1,8 @@
 .select {
   cursor: pointer;
+  margin-left: 1rem;
   padding: 1rem;
   width: 95%;
-  margin-left: 1rem;
 }
 
 .card_recipes {
