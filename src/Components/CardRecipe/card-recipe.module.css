@@ -2,7 +2,56 @@
   width: 17rem;
 }
 
-.buttonCard {
-  border: none;
+.card {
+  align-content: center;
+  align-items: center;
+  background-color: var(--light-grey);
+  border-radius: 1em;
+  box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.37);
+  display: flex;
+  flex-direction: column;
+  height: 26rem;
+  justify-content: center;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  position: relative;
   width: 100%;
+}
+
+.buttonImage {
+  border: none;
+}
+
+.image {
+  border-radius: 1rem;
+  margin-bottom: 0.8rem;
+  width: 70%;
+}
+
+.divNameShare {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.divNameShare button {
+  align-items: center;
+  border: none;
+  display: flex;
+  font-size: 2rem;
+}
+
+.divNameShare p {
+  font-size: small;
+  margin: 0;
+}
+
+
+.tags {
+  background-color: var(--secondary-color);
+  border: none;
+  color: var(--light-grey);
+  font-size: 0.9rem;
+  margin: 0.1rem;
+  padding: 0.4rem;
 }
