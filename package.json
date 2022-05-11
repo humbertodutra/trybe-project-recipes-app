@@ -84,18 +84,5 @@
       "clover",
       "html"
     ]
-  },
-  "description": "Ao iniciar este projeto, você concorda com as diretrizes do Código de Ética e Conduta e do Manual da Pessoa Estudante da Trybe.",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tryber/sd-019-c-project-recipes-app.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/tryber/sd-019-c-project-recipes-app/issues"
-  },
-  "homepage": "https://github.com/tryber/sd-019-c-project-recipes-app#readme"
+  }
 }

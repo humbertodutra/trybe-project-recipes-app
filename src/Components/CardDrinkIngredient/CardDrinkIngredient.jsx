@@ -2,14 +2,12 @@ import React, { useContext } from 'react';
 import propTypes from 'prop-types';
 import MyContext from '../../context/MyContext';
 import { fetchDrinksRecipes } from '../../service/getIngredients';
-import styles from './card-drink-ingredient.module.css';
 
 export default function CardDrinkIngredient({ strIngredient, idIngredient, history }) {
   const { setRecipesByIng } = useContext(MyContext);
   return (
     <div>
       <button
-        className={ styles.card_btn }
         type="button"
         data-testid={ `${idIngredient}-ingredient-card` }
         onClick={ async () => {
@@ -19,7 +17,6 @@ export default function CardDrinkIngredient({ strIngredient, idIngredient, histo
         } }
       >
         <img
-          className={ styles.ingredient_img }
           src={ `https://www.thecocktaildb.com/images/ingredients/${strIngredient}-Small.png` }
           alt={ `${strIngredient}` }
           data-testid={ `${idIngredient}-card-img` }
