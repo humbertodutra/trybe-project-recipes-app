@@ -3,6 +3,7 @@ import Header from '../../Components/Header/Header';
 import Footer from '../../Components/Footer/Footer';
 import MyContext from '../../context/MyContext';
 import CardIngredient from '../../Components/CardIngredient/CardIngredient';
+import styles from './Explore-by-ingredients.module.css';
 
 export default function ExploreFoodsIngredients(props) {
   const { fetchIngredients } = useContext(MyContext);
@@ -23,16 +24,18 @@ export default function ExploreFoodsIngredients(props) {
   return (
     <div>
       <Header { ...props } title="Explore Ingredients" dontShowSearchIcon />
-      {arrIgredients.length !== 0 && arrIgredients.map(
-        ({ strIngredient, idIngredient }, index) => (
-          <CardIngredient
-            { ...props }
-            key={ idIngredient }
-            strIngredient={ strIngredient }
-            idIngredient={ index }
-          />
-        ),
-      )}
+      <div className={ styles.card_ingredients }>
+        {arrIgredients.length !== 0 && arrIgredients.map(
+          ({ strIngredient, idIngredient }, index) => (
+            <CardIngredient
+              { ...props }
+              key={ idIngredient }
+              strIngredient={ strIngredient }
+              idIngredient={ index }
+            />
+          ),
+        )}
+      </div>
       <Footer />
     </div>
   );

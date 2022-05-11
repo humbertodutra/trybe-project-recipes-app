@@ -16,7 +16,7 @@ describe('Testes da tela Explore Foods Ingredients', () => {
     const button = await screen.findByRole('button', { name: /chicken/i });
     userEvent.click(button);
     const { pathname } = history.location;
-    expect(pathname).toBe('/');
-    // não está indo pra rota "/drinks"
+    expect(pathname).toBe('/foods');
+    // não está indo pra rota "/foods"
   });
 });

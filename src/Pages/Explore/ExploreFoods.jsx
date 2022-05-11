@@ -3,14 +3,16 @@ import propTypes from 'prop-types';
 import Header from '../../Components/Header/Header';
 import Footer from '../../Components/Footer/Footer';
 import MyContext from '../../context/MyContext';
+import styles from './Explore.module.css';
 
 export default function ExploreFoods(props) {
   const { exploreRandom } = useContext(MyContext);
   return (
     <div>
       <Header { ...props } title="Explore Foods" dontShowSearchIcon />
-      <form>
+      <form className={ styles.explore_container }>
         <button
+          className={ styles.buttons }
           type="button"
           data-testid="explore-by-ingredient"
           onClick={ () => {
@@ -22,6 +24,7 @@ export default function ExploreFoods(props) {
 
         </button>
         <button
+          className={ styles.buttons }
           type="button"
           data-testid="explore-by-nationality"
           onClick={ () => {
@@ -33,6 +36,7 @@ export default function ExploreFoods(props) {
 
         </button>
         <button
+          className={ styles.buttons }
           type="button"
           data-testid="explore-surprise"
           onClick={ async () => {
