@@ -2,13 +2,15 @@ import React from 'react';
 import propTypes from 'prop-types';
 import Footer from '../../Components/Footer/Footer';
 import Header from '../../Components/Header/Header';
+import styles from './Explore.module.css';
 
 export default function Explore(props) {
   return (
     <div>
       <Header { ...props } title="Explore" dontShowSearchIcon />
-      <form>
+      <form className={ styles.explore_container }>
         <button
+          className={ styles.buttons }
           type="button"
           data-testid="explore-foods"
           onClick={ () => {
@@ -16,10 +18,11 @@ export default function Explore(props) {
             history.push('/explore/foods');
           } }
         >
-          Explore Foods
+          <h2>Explore Foods</h2>
 
         </button>
         <button
+          className={ styles.buttons }
           type="button"
           data-testid="explore-drinks"
           onClick={ () => {
@@ -27,7 +30,7 @@ export default function Explore(props) {
             history.push('/explore/drinks');
           } }
         >
-          Explore Drinks
+          <h2>Explore Drinks</h2>
 
         </button>
       </form>

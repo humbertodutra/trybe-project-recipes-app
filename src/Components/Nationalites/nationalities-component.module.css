@@ -1,0 +1,14 @@
+.select {
+  cursor: pointer;
+  margin-left: 1rem;
+  padding: 1rem;
+  width: 95%;
+}
+
+.card_recipes {
+  background-color: var(--main-color);
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  margin-top: 2rem;
+}
