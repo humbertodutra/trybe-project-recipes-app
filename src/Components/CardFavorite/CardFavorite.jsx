@@ -21,44 +21,48 @@ export default function CardFavorite(
   };
 
   return (
-    <div>
-      <Link to={ `/${type}s/${id}` } className={ styles.linkImg }>
-        <img
-          src={ image }
-          alt={ title }
-          data-testid={ `${index}-horizontal-image` }
-        />
-      </Link>
-      <Link to={ `/${type}s/${id}` }>
-        <h1 data-testid={ `${index}-horizontal-name` }>{ title }</h1>
-      </Link>
-      {type === 'drink' ? (
-        <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholic }</p>
-      ) : (
-        <p
-          data-testid={ `${index}-horizontal-top-text` }
-        >
-          { `${nationality} - ${category}` }
+    <div className={ styles.card }>
+      <section className={ styles.card_recipe }>
+        <Link to={ `/${type}s/${id}` } className={ styles.linkImg }>
+          <img
+            src={ image }
+            alt={ title }
+            data-testid={ `${index}-horizontal-image` }
+          />
+        </Link>
+        <Link to={ `/${type}s/${id}` }>
+          <h1 data-testid={ `${index}-horizontal-name` }>{ title }</h1>
+        </Link>
+        {type === 'drink' ? (
+          <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholic }</p>
+        ) : (
+          <p
+            data-testid={ `${index}-horizontal-top-text` }
+          >
+            { `${nationality} - ${category}` }
 
-        </p>)}
-      <button
-        type="button"
-        data-testid={ `${index}-horizontal-share-btn` }
-        src={ share }
-        onClick={ copied }
-      >
-        <img src={ share } alt="profileIcon" />
+          </p>)}
+        <section className={ styles.share }>
+          <button
+            type="button"
+            data-testid={ `${index}-horizontal-share-btn` }
+            src={ share }
+            onClick={ copied }
+          >
+            <img src={ share } alt="profileIcon" />
 
-      </button>
-      {copiedLink && <span>Link copied!</span>}
-      <button
-        type="button"
-        data-testid={ `${index}-horizontal-favorite-btn` }
-        src={ deslike }
-        onClick={ () => unfavoriteRecipe(id) }
-      >
-        <img src={ deslike } alt="profileIcon" />
-      </button>
+          </button>
+          {copiedLink && <span>Link copied!</span>}
+          <button
+            type="button"
+            data-testid={ `${index}-horizontal-favorite-btn` }
+            src={ deslike }
+            onClick={ () => unfavoriteRecipe(id) }
+          >
+            <img src={ deslike } alt="profileIcon" />
+          </button>
+        </section>
+      </section>
     </div>
   );
 }
