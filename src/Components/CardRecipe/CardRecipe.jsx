@@ -27,6 +27,14 @@ export default function CardRecipe({
             data-testid={ `${index}-horizontal-image` }
           />
         </button>
+        {type === 'food' ? (
+          <span data-testid={ `${index}-horizontal-top-text` }>
+            {`${nationality} - ${category}`}
+          </span>
+        ) : (
+          <span data-testid={ `${index}-horizontal-top-text` }>{alcoholicOrNot}</span>
+        )}
+
         <div className={ styles.divNameShare }>
           <button
             type="button"
@@ -53,16 +61,16 @@ export default function CardRecipe({
             )}
           </button>
         </div>
-        {type === 'food' ? (
-          <span data-testid={ `${index}-horizontal-top-text` }>
-            {`${nationality} - ${category}`}
-          </span>
-        ) : (
-          <span data-testid={ `${index}-horizontal-top-text` }>{alcoholicOrNot}</span>
-        )}
 
-        <p data-testid={ `${index}-horizontal-done-date` }>{`Done in: ${doneDate}`}</p>
-        <div>
+        <p
+          className={ styles.doneDate }
+          data-testid={ `${index}-horizontal-done-date` }
+        >
+          {`Done in: ${doneDate}`}
+        </p>
+        <div
+          className={ styles.divTags }
+        >
           {tagName && tagName.map((tag) => (
             <button
               className={ styles.tags }

@@ -107,7 +107,11 @@ function FoodProgress({ match }) {
       name: meals[0].strMeal,
       image: meals[0].strMealThumb,
       doneDate: today.toLocaleDateString(),
-      tags: meals[0].strTags.split(' '),
+      tags: meals[0].strTags.includes(',') ? (
+        meals[0].strTags.split(',')
+      ) : (
+        meals[0].strTags.split(' ')
+      ),
     };
     console.log(recipeToLocalStorage);
     const arrRecipes = [...doneRecipes, recipeToLocalStorage];
