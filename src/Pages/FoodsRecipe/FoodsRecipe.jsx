@@ -113,52 +113,63 @@ function FoodsRecipe({ match }) {
       {details.meals && arrayIngredients.filterIngredients && recommend.length > 0
        && (
          <div className={ styles.container }>
+
            <img
              src={ details.meals[0].strMealThumb }
              alt={ details.meals[0].strMeal }
              data-testid="recipe-photo"
+             className={ styles.images }
            />
 
-           <h1 data-testid="recipe-title">{details.meals[0].strMeal}</h1>
-
-           <button
-             type="button"
-             data-testid="share-btn"
-             onClick={ () => {
-               copy(`http://localhost:3000${history.location.pathname}`);
-               setShowCopyMessage(true);
-             } }
+           <h1
+             className={ styles.title }
+             data-testid="recipe-title"
            >
-             {showCopyMessage ? 'Link copied!' : 'Share'}
-           </button>
+             {details.meals[0].strMeal}
+           </h1>
 
-           <div
-             role="button"
-             onKeyPress={ () => { } }
-             tabIndex="0"
-             onClick={ () => {
-               if (alreadyFavorite()) {
-                 return unfavoriteRecipe();
-               }
-               return favoriteRecipe();
-             } }
-           >
-             {alreadyFavorite() ? (
-               <img
-                 data-testid="favorite-btn"
-                 alt="Black heart"
-                 src={ blackHeartIcon }
-               />
-             ) : (
-               <img
-                 data-testid="favorite-btn"
-                 alt="White heart"
-                 src={ whiteHeartIcon }
-               />
-             )}
+           <div className={ styles.buttons_container }>
+
+             <div
+               role="button"
+               onKeyPress={ () => { } }
+               tabIndex="0"
+               onClick={ () => {
+                 if (alreadyFavorite()) {
+                   return unfavoriteRecipe();
+                 }
+                 return favoriteRecipe();
+               } }
+             >
+               {alreadyFavorite() ? (
+                 <img
+                   data-testid="favorite-btn"
+                   alt="Black heart"
+                   src={ blackHeartIcon }
+                 />
+               ) : (
+                 <img
+                   data-testid="favorite-btn"
+                   alt="White heart"
+                   src={ whiteHeartIcon }
+                 />
+               )}
+             </div>
+
+             <button
+               type="button"
+               className={ styles.button_share }
+               data-testid="share-btn"
+               onClick={ () => {
+                 copy(`http://localhost:3000${history.location.pathname}`);
+                 setShowCopyMessage(true);
+               } }
+             >
+               {showCopyMessage ? 'Link copied!' : 'Share'}
+             </button>
            </div>
 
-           <p data-testid="recipe-category">{details.meals[0].strCategory}</p>
+           <h2 data-testid="recipe-category">{details.meals[0].strCategory}</h2>
 
            <ul className={ styles.container_foods }>
              {arrayIngredients.filterIngredients.map((elem, i) => (
@@ -173,11 +184,12 @@ function FoodsRecipe({ match }) {
              ))}
            </ul>
 
-           <p data-testid="instructions">{details.meals[0].strInstructions}</p>
+           <h3 data-testid="instructions">{details.meals[0].strInstructions}</h3>
 
            <iframe
              src={ `https://www.youtube.com/embed/${youtube()}` }
              title={ details.meals.strMeal }
+             className={ styles.images }
              width="425"
              height="350"
              data-testid="video"
@@ -187,7 +199,11 @@ function FoodsRecipe({ match }) {
 
            <ul className={ styles.container_carrousel }>
              {recommend.map((elem, index) => (
-               <li key={ elem.idDrink } data-testid={ `${index}-recomendation-card` }>
+               <li
+                 key={ elem.idDrink }
+                 data-testid={ `${index}-recomendation-card` }
+                 className={ styles.images }
+               >
                  <CardRecommend
                    index={ index }
                    strMealOrDrink={ elem.strDrink }
