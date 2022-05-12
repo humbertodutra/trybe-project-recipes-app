@@ -96,6 +96,15 @@ function DrinkProgress({ match }) {
 
   const history = useHistory();
 
+  const tagsCustomize = (stringTag) => {
+    if (stringTag.includes(',')) {
+      return stringTag.split(',');
+    } if (stringTag.includes(' ')) {
+      return stringTag.split(' ');
+    }
+    return [];
+  };
+
   const saveRecipe = () => {
     const { drinks } = details;
     const timeElapsed = Date.now();
@@ -109,7 +118,7 @@ function DrinkProgress({ match }) {
       name: drinks[0].strDrink,
       image: drinks[0].strDrinkThumb,
       doneDate: today.toLocaleDateString(),
-      tags: drinks[0].strTags ? drinks[0].strTags.split(' ') : [],
+      tags: () => tagsCustomize(drinks[0].strTags),
     };
     console.log(recipeToLocalStorage);
     const arrRecipes = [...doneRecipes, recipeToLocalStorage];
