@@ -1,11 +1,11 @@
-.container {
-  display: flex;
-  flex-direction: column;
+* {
+  font-size: 1.6rem;
 }
 
-.container_carrousel {
+.container {
+  align-items: center;
   display: flex;
-  overflow: scroll;
+  flex-direction: column;
 }
 
 .container_carrousel li {
@@ -13,7 +13,65 @@
   width: 20rem;
 }
 
+ul {
+  list-style-type: none;
+}
+
 .button_start {
   bottom: 0;
   position: fixed;
+}
+
+.button_share, .heart {
+  width: 10rem;
+}
+
+.button_share {
+  left: 25rem;
+  position: absolute;
+  top: 32rem;
+}
+
+.button_start, .button_share {
+  background: var(--accent-color);
+  border: none;
+  border-radius: 0.5rem;
+  color: var(--main-color);
+  cursor: pointer;
+  font: inherit;
+  outline: inherit;
+  padding: 0.5rem;
+}
+
+.title_container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.images {
+  width: 100%;
+}
+
+.video {
+  height: 20rem;
+  margin: 2rem;
+  width: 30rem;
+}
+
+.title {
+  margin-top: 2rem;
+}
+
+.carousel {
+  display: flex;
+  margin-bottom: 8rem;
+  overflow: scroll;
+  width: 100%;
+}
+
+h2 {
+  margin: 2rem;
 }

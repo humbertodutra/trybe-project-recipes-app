@@ -1,17 +1,20 @@
+* {
+  font-size: 1.6rem;
+}
+
 .container {
   align-items: center;
   display: flex;
   flex-direction: column;
 }
 
-.container_carrousel {
-  display: flex;
-  overflow: scroll;
-}
-
 .container_carrousel li {
   height: 20rem;
   width: 20rem;
+}
+
+ul {
+  list-style-type: none;
 }
 
 .button_start {
@@ -21,6 +24,12 @@
 
 .button_share, .heart {
   width: 10rem;
+}
+
+.button_share {
+  left: 25rem;
+  position: absolute;
+  top: 32rem;
 }
 
 .button_start, .button_share {
@@ -34,7 +43,8 @@
   padding: 0.5rem;
 }
 
-.buttons_container {
+.title_container {
+  align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -45,6 +55,23 @@
   width: 100%;
 }
 
+.video {
+  height: 20rem;
+  margin: 2rem;
+  width: 30rem;
+}
+
 .title {
+  margin-top: 2rem;
+}
+
+.carousel {
+  display: flex;
+  margin-bottom: 8rem;
+  overflow: scroll;
+  width: 100%;
+}
+
+h2 {
   margin: 2rem;
 }

@@ -113,7 +113,6 @@ function FoodsRecipe({ match }) {
       {details.meals && arrayIngredients.filterIngredients && recommend.length > 0
        && (
          <div className={ styles.container }>
-
            <img
              src={ details.meals[0].strMealThumb }
              alt={ details.meals[0].strMeal }
@@ -121,14 +120,14 @@ function FoodsRecipe({ match }) {
              className={ styles.images }
            />
 
-           <h1
-             className={ styles.title }
-             data-testid="recipe-title"
-           >
-             {details.meals[0].strMeal}
-           </h1>
+           <div className={ styles.title_container }>
 
-           <div className={ styles.buttons_container }>
+             <h1
+               className={ styles.title }
+               data-testid="recipe-title"
+             >
+               {details.meals[0].strMeal}
+             </h1>
 
              <div
                role="button"
@@ -189,20 +188,20 @@ function FoodsRecipe({ match }) {
            <iframe
              src={ `https://www.youtube.com/embed/${youtube()}` }
              title={ details.meals.strMeal }
-             className={ styles.images }
+             className={ styles.video }
              width="425"
              height="350"
              data-testid="video"
            />
 
-           <h3>Recommendation Recipes</h3>
+           <h2>Recommendation Recipes</h2>
 
-           <ul className={ styles.container_carrousel }>
+           <ul className={ styles.carousel }>
              {recommend.map((elem, index) => (
                <li
                  key={ elem.idDrink }
                  data-testid={ `${index}-recomendation-card` }
-                 className={ styles.images }
+                 className={ styles.carousel_cell }
                >
                  <CardRecommend
                    index={ index }

@@ -7,14 +7,24 @@ function CardRecommend({ index, strMealOrDrink, strMealOrDrinkThumb, id, prevPat
   return (
     <Link
       to={ `/${prevPath}/${id}` }
-      className={ styles.card_recipe }
     >
-      <img
-        src={ strMealOrDrinkThumb }
-        alt={ strMealOrDrink }
-        className={ styles.recomment_image }
-      />
-      <h2 data-testid={ `${index}-recomendation-title` }>{strMealOrDrink}</h2>
+      <div
+        className={ styles.card_recipe }
+      >
+        <img
+          src={ strMealOrDrinkThumb }
+          alt={ strMealOrDrink }
+          className={ styles.recommend_image }
+        />
+        <h2
+          data-testid={ `${index}-recomendation-title` }
+          className={ styles.title_recommend }
+        >
+          {strMealOrDrink}
+
+        </h2>
+      </div>
+
     </Link>
   );
 }
