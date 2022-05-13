@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import CardFavorite from '../../Components/CardFavorite/CardFavorite';
 import Header from '../../Components/Header/Header';
+import styles from './favorite-recipes.module.css';
 import MyContext from '../../context/MyContext';
 
 export default function FavoriteRecipes(props) {
@@ -15,11 +16,12 @@ export default function FavoriteRecipes(props) {
     <div>
       <Header { ...props } title="Favorite Recipes" dontShowSearchIcon />
       { verifyFilter() && (
-        <div>
-          <form>
+        <div className={ styles.container }>
+          <form className={ styles.form }>
             <button
               type="button"
               data-testid="filter-by-all-btn"
+              className={ styles.button }
               onClick={ filter }
             >
               All
@@ -28,6 +30,7 @@ export default function FavoriteRecipes(props) {
             <button
               type="button"
               data-testid="filter-by-food-btn"
+              className={ styles.button }
               onClick={ () => filter('food') }
             >
               Food
@@ -36,16 +39,17 @@ export default function FavoriteRecipes(props) {
             <button
               type="button"
               data-testid="filter-by-drink-btn"
+              className={ styles.button }
               onClick={ () => filter('drink') }
             >
               Drinks
 
             </button>
           </form>
-          <ul>
+          <ul className={ styles.ul }>
             {
               verifyFilter().map((elem, index) => (
-                <li key={ elem.id }>
+                <li key={ elem.id } className={ styles.li }>
                   <CardFavorite
                     image={ elem.image }
                     type={ elem.type }
