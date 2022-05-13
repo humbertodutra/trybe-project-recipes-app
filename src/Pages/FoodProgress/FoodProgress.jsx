@@ -129,79 +129,94 @@ function FoodProgress({ match }) {
             src={ details.meals[0].strMealThumb }
             alt={ details.meals[0].strMeal }
             data-testid="recipe-photo"
+            className={ styles.images }
           />
 
-          <h1 data-testid="recipe-title">{details.meals[0].strMeal}</h1>
+          <div className={ styles.title_container }>
 
-          <button
-            type="button"
-            data-testid="share-btn"
-            onClick={ () => {
-              copy(`http://localhost:3000/foods/${details.meals[0].idMeal}`);
-              setShowCopyMessage(true);
-            } }
-          >
-            {showCopyMessage ? 'Link copied!' : 'Share'}
-          </button>
+            <h1
+              className={ styles.title }
+              data-testid="recipe-title"
+            >
+              {details.meals[0].strMeal}
+            </h1>
 
-          <div
-            role="button"
-            onKeyPress={ () => { } }
-            tabIndex="0"
-            onClick={ () => {
-              if (alreadyFavorite()) {
-                return unfavoriteRecipe();
-              }
-              return favoriteRecipe();
-            } }
-          >
-            {alreadyFavorite() ? (
-              <img
-                data-testid="favorite-btn"
-                alt="Black heart"
-                src={ blackHeartIcon }
-              />
-            ) : (
-              <img
-                data-testid="favorite-btn"
-                alt="White heart"
-                src={ whiteHeartIcon }
-              />
-            )}
+            <div
+              role="button"
+              onKeyPress={ () => { } }
+              tabIndex="0"
+              onClick={ () => {
+                if (alreadyFavorite()) {
+                  return unfavoriteRecipe();
+                }
+                return favoriteRecipe();
+              } }
+            >
+              {alreadyFavorite() ? (
+                <img
+                  data-testid="favorite-btn"
+                  alt="Black heart"
+                  src={ blackHeartIcon }
+                />
+              ) : (
+                <img
+                  data-testid="favorite-btn"
+                  alt="White heart"
+                  src={ whiteHeartIcon }
+                />
+              )}
+            </div>
+
+            <button
+              type="button"
+              data-testid="share-btn"
+              className={ styles.button_share }
+              onClick={ () => {
+                copy(`http://localhost:3000/foods/${details.meals[0].idMeal}`);
+                setShowCopyMessage(true);
+              } }
+            >
+              {showCopyMessage ? 'Link copied!' : 'Share'}
+            </button>
+
           </div>
 
-          <p data-testid="recipe-category">{details.meals[0].strCategory}</p>
+          <h2 data-testid="recipe-category">{details.meals[0].strCategory}</h2>
 
           <ul className={ styles.container_foods }>
             {arrayIngredients.filterIngredients.map((elem, i) => (
-              <label
-                htmlFor={ `${i}-ingredient-step` }
+              <li
                 key={ elem }
-                data-testid={ `${i}-ingredient-step` }
               >
-                <input
-                  type="checkbox"
-                  id={ `${i}-ingredient-step` }
-                  checked={ checked[i] }
-                  onChange={ () => {
-                    handleChange(i);
-                  } }
-                />
-                <span>
-                  {elem[1]}
-                  {' '}
-                  {arrayIngredients.filterMens[i] && arrayIngredients.filterMens[i][1]}
-                </span>
-              </label>
+                <label
+                  htmlFor={ `${i}-ingredient-step` }
+                  data-testid={ `${i}-ingredient-step` }
+                >
+                  <input
+                    type="checkbox"
+                    id={ `${i}-ingredient-step` }
+                    checked={ checked[i] }
+                    onChange={ () => {
+                      handleChange(i);
+                    } }
+                  />
+                  <span>
+                    {elem[1]}
+                    {' '}
+                    {arrayIngredients.filterMens[i] && arrayIngredients.filterMens[i][1]}
+                  </span>
+                </label>
+              </li>
 
             ))}
           </ul>
 
-          <p data-testid="instructions">{details.meals[0].strInstructions}</p>
+          <h3 data-testid="instructions">{details.meals[0].strInstructions}</h3>
 
           <button
             type="button"
             data-testid="finish-recipe-btn"
+            className={ styles.button_finish }
             onClick={ (e) => {
               e.preventDefault();
               saveRecipe();

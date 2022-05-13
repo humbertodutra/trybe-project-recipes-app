@@ -1,0 +1,20 @@
+.card_recipe {
+  background-color: var(--main-color);
+  border-radius: 1rem;
+  box-shadow: 2px 2px 5px var(--dark-blue);
+  box-sizing: border-box;
+  color: var(--dark-blue);
+  margin: 1rem;
+  padding: 1rem;
+  text-decoration: inherit;
+}
+
+.title_recommend {
+  color: var(--dark-blue);
+  margin: 1rem;
+}
+
+.recommend_image {
+  height: 16rem;
+  width: 16rem;
+}

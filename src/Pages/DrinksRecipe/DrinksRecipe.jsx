@@ -115,50 +115,60 @@ function DrinksRecipe({ match }) {
             src={ details.drinks[0].strDrinkThumb }
             alt={ details.drinks[0].strDrink }
             data-testid="recipe-photo"
+            className={ styles.images }
           />
 
-          <h1 data-testid="recipe-title">{details.drinks[0].strDrink}</h1>
+          <div className={ styles.title_container }>
 
-          <button
-            type="button"
-            data-testid="share-btn"
-            onClick={ () => {
-              copy(`http://localhost:3000${history.location.pathname}`);
-              setShowCopyMessage(true);
-            } }
-          >
-            {showCopyMessage ? 'Link copied!' : 'Share'}
-          </button>
+            <h1
+              className={ styles.title }
+              data-testid="recipe-title"
+            >
+              {details.drinks[0].strDrink}
+            </h1>
 
-          <div
-            role="button"
-            onKeyPress={ () => { } }
-            tabIndex="0"
-            onClick={ () => {
-              if (alreadyFavorite()) {
-                return unfavoriteRecipe();
-              }
-              return favoriteRecipe();
-            } }
-          >
-            {alreadyFavorite() ? (
-              <img
-                data-testid="favorite-btn"
-                alt="Black heart"
-                src={ blackHeartIcon }
-              />
-            ) : (
-              <img
-                data-testid="favorite-btn"
-                alt="White heart"
-                src={ whiteHeartIcon }
-              />
-            )}
+            <div
+              role="button"
+              onKeyPress={ () => { } }
+              tabIndex="0"
+              onClick={ () => {
+                if (alreadyFavorite()) {
+                  return unfavoriteRecipe();
+                }
+                return favoriteRecipe();
+              } }
+            >
+              {alreadyFavorite() ? (
+                <img
+                  data-testid="favorite-btn"
+                  alt="Black heart"
+                  src={ blackHeartIcon }
+                />
+              ) : (
+                <img
+                  data-testid="favorite-btn"
+                  alt="White heart"
+                  src={ whiteHeartIcon }
+                />
+              )}
+            </div>
+
+            <button
+              type="button"
+              data-testid="share-btn"
+              className={ styles.button_share }
+              onClick={ () => {
+                copy(`http://localhost:3000${history.location.pathname}`);
+                setShowCopyMessage(true);
+              } }
+            >
+              {showCopyMessage ? 'Link copied!' : 'Share'}
+            </button>
           </div>
 
-          <p data-testid="recipe-category">{details.drinks[0].strAlcoholic}</p>
+          <h2 data-testid="recipe-category">{details.drinks[0].strAlcoholic}</h2>
 
-          <ul>
+          <ul className={ styles.container_drinks }>
             {validIngredients().map((elem, i) => (
               <li
                 key={ elem }
@@ -169,13 +179,17 @@ function DrinksRecipe({ match }) {
             ))}
           </ul>
 
-          <p data-testid="instructions">{details.drinks[0].strInstructions}</p>
+          <h3 data-testid="instructions">{details.drinks[0].strInstructions}</h3>
 
-          <h3>Recommendation Recipes</h3>
+          <h2>Recommendation Recipes</h2>
 
-          <ul className={ styles.container_carrousel }>
+          <ul className={ styles.carousel }>
             {recommend.map((elem, index) => (
-              <li key={ elem.idMeal } data-testid={ `${index}-recomendation-card` }>
+              <li
+                key={ elem.idMeal }
+                data-testid={ `${index}-recomendation-card` }
+                className={ styles.carousel_cell }
+              >
                 <CardRecommend
                   index={ index }
                   strMealOrDrink={ elem.strMeal }

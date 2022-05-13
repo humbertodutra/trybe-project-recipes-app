@@ -7,8 +7,8 @@ function CardRecipes({ index, strMealOrDrink, strMealOrDrinkThumb, id, prevPath 
   return (
     <Link
       className={ styles.card_recipe }
-      data-testid={ `${index}-recipe-card` }
       to={ `/${prevPath}/${id}` }
+      data-testid={ `${index}-recipe-card` }
     >
       <img
         src={ strMealOrDrinkThumb }
