@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.ul {
+  align-items: center;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.li {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 3rem 0;
+}
+
+.button {
+  align-items: center;
+  background-color: var(--accent-color);
+  border: none;
+  border-radius: 0.6rem;
+  color: var(--light-grey);
+  display: flex;
+  height: 4rem;
+  justify-content: center;
+  padding: 2rem;
+  width: 20%;
+}

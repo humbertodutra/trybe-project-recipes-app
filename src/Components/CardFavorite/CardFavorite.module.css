@@ -1,4 +1,43 @@
+a {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+.card {
+  background: var(--main-color);
+  border-radius: 2rem;
+  box-shadow: 0 0.1rem 1.5rem 0.2rem rgba(9, 7, 7, 0.491);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+}
+
+.card_recipe {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.share {
+  align-items: center;
+  display: flex;
+}
+
+.share button {
+  background-color: transparent;
+  border: none;
+  margin: 0 0.8rem;
+}
+
+.linkImg {
+  display: flex;
+  justify-content: center;
+}
+
 .linkImg img {
-  height: 30rem;
-  width: 30rem;
+  height: 26%;
+  padding: 1rem 0;
+  width: 80%;
 }
