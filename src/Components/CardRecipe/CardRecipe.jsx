@@ -22,7 +22,7 @@ export default function CardRecipe({
           <img
             src={ image }
             className={ styles.image }
-            width="50%"
+            width="20%"
             alt="Imagem da receita"
             data-testid={ `${index}-horizontal-image` }
           />
